@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.duo-button-container .bp3-button {
+  border-radius: 4px;
+  margin: 0px 7px;
+  min-width: 96px;
+  min-height: 30px; }
+  .duo-button-container .bp3-button .mpd-button-text {
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700; }
+.duo-button-container .bp3-button:first-child {
+  border: 1px solid rgba(0, 0, 0, 0.25) !important;
+  background-color: #ffffff !important; }
+  .duo-button-container .bp3-button:first-child .mpd-button-text {
+    color: black !important; }
+.duo-button-container .bp3-button:last-child {
+  background-color: #1f76ff !important;
+  margin-right: 0; }
+
+/*# sourceMappingURL=styles.css.map */

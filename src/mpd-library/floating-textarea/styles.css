@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+.mpd-floating-textarea-container.mpd-default {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0px 0px 0px;
+  position: relative;
+  width: 100%;
+  outline: none !important; }
+  .mpd-floating-textarea-container.mpd-default.bp3-large textarea {
+    border-radius: 5px;
+    border-width: 1px;
+    padding: 15px !important; }
+  .mpd-floating-textarea-container.mpd-default.bp3-large .mpd-floating-textarea-label {
+    top: 15px;
+    left: 10px;
+    padding: 0px 5px; }
+  .mpd-floating-textarea-container.mpd-default.bp3-large textarea:focus ~ .mpd-floating-textarea-label,
+  .mpd-floating-textarea-container.mpd-default.bp3-large textarea:not(:focus):valid ~ .mpd-floating-textarea-label {
+    top: -7px; }
+  .mpd-floating-textarea-container.mpd-default textarea:focus ~ .mpd-floating-textarea-label,
+  .mpd-floating-textarea-container.mpd-default textarea:not(:focus):valid ~ .mpd-floating-textarea-label {
+    font-size: 9px;
+    font-weight: 600;
+    top: -20px;
+    background: white; }
+  .mpd-floating-textarea-container.mpd-default textarea {
+    resize: none;
+    width: 100%;
+    border-radius: 0;
+    padding: 0px !important;
+    box-shadow: none !important;
+    font-size: 11px;
+    font-weight: 600;
+    border-width: 0px 0px 1px 0px;
+    border-style: solid;
+    transition: 0.5s ease-in-out all; }
+  .mpd-floating-textarea-container.mpd-default .mpd-floating-textarea-counter {
+    text-align: right;
+    color: rgba(0, 0, 0, 0.75);
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 400; }
+  .mpd-floating-textarea-container.mpd-default .mpd-floating-textarea-label {
+    position: absolute;
+    pointer-events: none;
+    font-size: 9px;
+    font-weight: 600;
+    top: 20px;
+    left: 0px;
+    transition: 0.2s ease all; }
+.mpd-floating-textarea-container.mpd-static {
+  display: flex;
+  flex-direction: column;
+  outline: none !important; }
+  .mpd-floating-textarea-container.mpd-static textarea {
+    order: 1;
+    order: 1;
+    resize: none;
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid black; }
+  .mpd-floating-textarea-container.mpd-static .mpd-floating-textarea-counter {
+    order: 2;
+    text-align: end; }
+
+/*# sourceMappingURL=styles.css.map */

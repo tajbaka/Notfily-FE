@@ -1,0 +1,10 @@
+.styled-checkbox {
+  user-select: none;
+  margin-bottom: 0px !important; }
+  .styled-checkbox .bp3-control-indicator {
+    outline: none !important; }
+  .styled-checkbox input:checked ~ .bp3-control-indicator {
+    background-color: #1f76ff !important;
+    box-shadow: none !important; }
+
+/*# sourceMappingURL=styles.css.map */

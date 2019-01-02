@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+.mpd-tree {
+  height: 100%; }
+  .mpd-tree .bp3-tree-node-content {
+    height: auto !important; }
+  .mpd-tree .bp3-collapse {
+    margin-left: 15px; }
+
+.mpd-tree-node-content {
+  padding: 7.5px 15px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: transform 0.3s ease; }
+  .mpd-tree-node-content:hover {
+    transform: scale(1.02); }
+  .mpd-tree-node-content:active {
+    transform: scale(1); }
+
+.mpd-tree-node.mpd-selected .mpd-tree-node-content {
+  transform: scale(1); }
+.mpd-tree-node .bp3-collapse .mpd-tree-node-content:hover {
+  transform: scale(1.02); }
+.mpd-tree-node .bp3-collapse .mpd-tree-node-content:active {
+  transform: scale(1); }
+.mpd-tree-node .bp3-collapse .mpd-tree-node {
+  margin: 0; }
+  .mpd-tree-node .bp3-collapse .mpd-tree-node.mpd-selected .mpd-tree-node-content {
+    transform: scale(1); }
+
+@media (max-width: 480px) {
+  .mpd-tree-node-content:hover {
+    transform: scale(1); }
+  .mpd-tree-node-content:active {
+    transform: scale(0.95); } }
+
+/*# sourceMappingURL=styles.css.map */

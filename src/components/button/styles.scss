@@ -1,0 +1,32 @@
+@import "../common/variables";
+
+.styled-button {
+    flex: initial;
+    padding: 0px 25px !important;
+    border-radius: 4px;
+    min-width: initial !important;
+    outline: none !important;
+    .mpd-button-text {
+        font-weight: 700;
+        font-family: $font-family;
+        font-size: 10px;
+    }
+    &.primary-color {
+        background-color: #22c488 !important;
+        height: 30px;
+        min-width: 96px !important;
+        .mpd-button-text {
+            color: white;
+            text-transform: uppercase;
+        }
+    }
+    &.white-color {
+        background-color: white !important;
+        height: 30px;
+        min-width: 96px !important;
+        .mpd-button-text {
+            color: #394d61;
+            text-transform: uppercase;
+        }
+    }
+}

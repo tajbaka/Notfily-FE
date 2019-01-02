@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.styled-button {
+  flex: initial;
+  padding: 0px 25px !important;
+  border-radius: 4px;
+  min-width: initial !important;
+  outline: none !important; }
+  .styled-button .mpd-button-text {
+    font-weight: 700;
+    font-family: "Open Sans", sans-serif;
+    font-size: 10px; }
+  .styled-button.primary-color {
+    background-color: #22c488 !important;
+    height: 30px;
+    min-width: 96px !important; }
+    .styled-button.primary-color .mpd-button-text {
+      color: white;
+      text-transform: uppercase; }
+  .styled-button.white-color {
+    background-color: white !important;
+    height: 30px;
+    min-width: 96px !important; }
+    .styled-button.white-color .mpd-button-text {
+      color: #394d61;
+      text-transform: uppercase; }
+
+/*# sourceMappingURL=styles.css.map */

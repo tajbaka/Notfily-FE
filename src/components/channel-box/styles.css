@@ -1,0 +1,244 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.channel-box {
+  position: relative;
+  justify-content: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  min-height: 100px;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+  border: 2px dashed rgba(0, 0, 0, 0.15);
+  user-select: none; }
+  .channel-box:hover {
+    border: 2px dashed #1f76ff; }
+    .channel-box:hover .channel-box-title {
+      color: #000000; }
+  .channel-box:active {
+    transform: scale(0.98); }
+  .channel-box.mpd-active {
+    border-color: transparent;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15), 0 -1px 5px rgba(0, 0, 0, 0.02); }
+    .channel-box.mpd-active .channel-box-checkmark {
+      display: initial; }
+    .channel-box.mpd-active .channel-box-icon-active {
+      display: initial; }
+    .channel-box.mpd-active .channel-box-icon {
+      display: none; }
+  .channel-box.type-multimedia {
+    width: 200px;
+    height: 100px; }
+    .channel-box.type-multimedia .channel-box-text-container {
+      padding: 0; }
+    .channel-box.type-multimedia .channel-box-description {
+      display: none; }
+    .channel-box.type-multimedia .channel-box-icons-container {
+      width: initial;
+      margin-bottom: 10px; }
+    .channel-box.type-multimedia .channel-box-checkmark {
+      display: none; }
+    .channel-box.type-multimedia .channel-box-main {
+      height: 100%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between; }
+    .channel-box.type-multimedia .channel-box-title {
+      padding: 0;
+      font-size: 16px;
+      font-weight: 700; }
+    .channel-box.type-multimedia .channel-box-icons-container {
+      display: initial;
+      margin: 0; }
+    .channel-box.type-multimedia :hover .channel-box-icon-active {
+      display: initial; }
+    .channel-box.type-multimedia :hover .channel-box-icon {
+      display: none; }
+    .channel-box.type-multimedia :hover .channel-box-title {
+      color: rgba(0, 0, 0, 0.75); }
+  .channel-box.type-mpd-default {
+    height: 100px; }
+  .channel-box.type-detailed {
+    padding: 0;
+    justify-content: initial;
+    transform: none; }
+    .channel-box.type-detailed .channel-box-main {
+      width: 100%;
+      top: 0px;
+      user-select: none;
+      align-items: center;
+      border-radius: 20px 20px 0 0;
+      min-height: 100px;
+      background-color: #ffffff;
+      border-color: rgba(0, 0, 0, 0.15); }
+    .channel-box.type-detailed .channel-box-title {
+      color: #000000;
+      font-family: "Open Sans", sans-serif;
+      font-size: 22px;
+      font-weight: 700; }
+    .channel-box.type-detailed .channel-box-description {
+      color: rgba(0, 0, 0, 0.75);
+      font-family: "Open Sans", sans-serif;
+      font-size: 16px;
+      font-weight: 400; }
+    .channel-box.type-detailed .channel-box-list {
+      display: initial;
+      padding: 15px 20px;
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15), 0 -1px 5px rgba(0, 0, 0, 0.02);
+      border-radius: 0px 0px 20px 20px;
+      background-color: #fafafa; }
+      .channel-box.type-detailed .channel-box-list div {
+        margin: 5px 0px; }
+    .channel-box.type-detailed .channel-box-list-item {
+      cursor: default; }
+      .channel-box.type-detailed .channel-box-list-item.mpd-active .bp3-control-indicator {
+        background-color: #1f76ff !important; }
+    .channel-box.type-detailed .bp3-checkbox {
+      color: rgba(0, 0, 0, 0.75);
+      font-size: 16px;
+      font-weight: 400; }
+      .channel-box.type-detailed .bp3-checkbox.mpd-active {
+        color: black;
+        font-size: 16px;
+        font-weight: 600; }
+      .channel-box.type-detailed .bp3-checkbox .bp3-control-indicator {
+        box-shadow: none !important;
+        outline: none !important;
+        background-image: none;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: 4px !important; }
+    .channel-box.type-detailed .bp3-control input:checked ~ .bp3-control-indicator {
+      border: none !important; }
+    .channel-box.type-detailed.mpd-active .channel-box-icon {
+      display: none; }
+    .channel-box.type-detailed.mpd-active .channel-box-icon-active {
+      display: inherit; }
+  .channel-box.type-groups {
+    min-height: 100px; }
+    .channel-box.type-groups.mpd-active .channel-box-info-container {
+      display: initial; }
+      .channel-box.type-groups.mpd-active .channel-box-info-container .mpd-button-text {
+        white-space: nowrap;
+        width: 120px;
+        text-overflow: ellipsis;
+        overflow: hidden; }
+    .channel-box.type-groups.mpd-active .channel-box-main {
+      padding: 10px 40px; }
+    .channel-box.type-groups.mpd-active .channel-box-text-container {
+      display: flex;
+      flex-direction: column; }
+    .channel-box.type-groups .channel-box-info-container {
+      align-self: start; }
+      .channel-box.type-groups .channel-box-info-container .mpd-button {
+        font-size: 9px;
+        font-weight: 600;
+        height: 20px;
+        font-family: "Open Sans", sans-serif;
+        text-transform: uppercase;
+        min-height: initial;
+        margin: 0 5px; }
+        .channel-box.type-groups .channel-box-info-container .mpd-button .mpd-button-text {
+          padding: 0 10px; }
+        .channel-box.type-groups .channel-box-info-container .mpd-button.public {
+          background-color: #c5dcff !important; }
+        .channel-box.type-groups .channel-box-info-container .mpd-button.private {
+          background-color: #c3c3c3 !important; }
+  .channel-box.type-maps {
+    margin: 0;
+    min-height: 173px; }
+    .channel-box.type-maps.mpd-active {
+      border: none;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15), 0 -1px 5px rgba(0, 0, 0, 0.02); }
+      .channel-box.type-maps.mpd-active .channel-box-checkmark {
+        display: initial; }
+      .channel-box.type-maps.mpd-active .channel-box-icon-active {
+        display: initial; }
+      .channel-box.type-maps.mpd-active .channel-box-icon {
+        display: none; }
+    .channel-box.type-maps .channel-box-main {
+      flex-direction: column;
+      align-items: center; }
+    .channel-box.type-maps .channel-box-icons-container {
+      justify-content: center;
+      margin-bottom: 10px; }
+    .channel-box.type-maps .channel-box-title,
+    .channel-box.type-maps .channel-box-description {
+      text-align: center; }
+  .channel-box.mpd-active .channel-box-title {
+    color: black; }
+  .channel-box.mpd-active .channel-box-description {
+    color: rgba(0, 0, 0, 0.75); }
+
+.channel-box-info-container {
+  display: none; }
+
+.channel-box-icons-container {
+  display: flex;
+  align-items: center;
+  width: 60px; }
+
+.channel-box-text-container {
+  padding: 0px 30px; }
+
+.channel-box-icon-active {
+  display: none; }
+
+.channel-box-checkmark {
+  display: none;
+  right: 20px;
+  top: 20px;
+  position: absolute; }
+
+.channel-box-checkmark-white {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 20px; }
+
+.channel-box-title {
+  padding: 5px;
+  padding-top: 0;
+  text-align: start;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "Open Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 700; }
+
+.channel-box-description {
+  padding: 5px;
+  padding-top: 0;
+  font-family: "Open Sans", sans-serif;
+  text-align: start;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 16px; }
+
+.channel-box-main {
+  text-align: center;
+  display: flex;
+  padding: 20px 40px; }
+
+.channel-box-list {
+  display: none;
+  padding: 20px 40px; }
+
+.channel-box-list-item {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  user-select: none;
+  cursor: pointer; }
+  .channel-box-list-item .mpd-icon {
+    display: none; }
+  .channel-box-list-item.mpd-active {
+    color: black; }
+    .channel-box-list-item.mpd-active .mpd-icon {
+      display: initial; }
+
+/*# sourceMappingURL=styles.css.map */

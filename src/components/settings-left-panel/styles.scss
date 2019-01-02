@@ -1,0 +1,68 @@
+@import "../common/variables";
+
+.settings-left-panel-title {
+    color: #000000;
+    font-family: $font-family;
+    font-size: 21px;
+    font-weight: 700;
+    min-width: 250px;
+    margin-top: 3px;
+}
+
+.settings-left-panel-header {
+    display: flex;
+    padding: 10px 20px;
+    height: 50px;
+    margin-top: -1px;
+    .mpd-button {
+        flex: initial;
+        margin-top: 1px;
+        display: none;
+    }
+}
+
+.settings-left-panel-border {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    right: 0;
+    top: 49px;
+    border-width: 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.settings-left-panel-container {
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.settings-left-panel-children-container {
+    padding: 0 20px;
+    // flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 480px) {
+    .settings-left-panel-header {
+      position: fixed;
+      z-index: 1;
+      background: white;
+      .mpd-button {
+        display: initial;
+      }
+    }
+    .settings-left-panel-border {
+        margin-top: 50px;
+        position: fixed;
+    }
+    .settings-left-panel-children-container {
+        margin-top: 50px;
+    }
+    .settings-left-panel-title {
+        padding: 0 10px;
+    }
+}

@@ -1,0 +1,61 @@
+@import "../common/variables.scss";
+
+.#{$ns}-tree {
+  height: 100%;
+  .bp3-tree-node-content {
+    height: auto !important;
+  }
+  .bp3-collapse {
+    margin-left: 15px;
+  }
+}
+
+.#{$ns}-tree-node-content {
+  padding: 7.5px 15px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
+  }
+  &:active {
+    transform: scale(1);
+  }
+}
+
+.#{$ns}-tree-node {
+  &.mpd-selected {
+    .#{$ns}-tree-node-content {
+      transform: scale(1);
+    }
+  }
+
+  .bp3-collapse {
+    .#{$ns}-tree-node-content {
+      &:hover {
+        transform: scale(1.02);
+      }
+      &:active {
+        transform: scale(1);
+      }
+    }
+    .#{$ns}-tree-node {
+      margin: 0;
+      &.mpd-selected {
+        .#{$ns}-tree-node-content {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .mpd-tree-node-content {
+    &:hover {
+      transform: scale(1);
+    }
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}

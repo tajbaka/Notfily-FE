@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.settings-items-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  user-select: none; }
+
+.settings-items-heading {
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.46px;
+  margin-bottom: 15px; }
+
+.settings-item {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 20px;
+  cursor: pointer; }
+
+.settings-items-inner-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 35px; }
+  .settings-items-inner-container hr {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    margin: 0;
+    position: absolute;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.15);
+    border-width: 0px 2px 0px 0px; }
+  .settings-items-inner-container.mpd-active hr {
+    border-color: #1f76ff; }
+  .settings-items-inner-container.mpd-active .settings-item {
+    color: #1f76ff; }
+
+@media (max-width: 480px) {
+  .settings-items-heading {
+    text-align: center; }
+
+  .settings-items-inner-container {
+    justify-content: center; }
+    .settings-items-inner-container hr {
+      display: none; }
+    .settings-items-inner-container .settings-item {
+      margin-left: 0; } }
+
+/*# sourceMappingURL=styles.css.map */

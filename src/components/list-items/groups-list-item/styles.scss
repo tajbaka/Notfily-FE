@@ -1,0 +1,98 @@
+@import "../../common/variables";
+
+.groups-list-item-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+    align-items: center;
+    user-select: none;
+    div {
+        margin: 0px 10px;
+        font-family: $font-family;
+        pointer-events: none;
+    }
+    .bp3-checkbox {
+        color: rgba(0, 0, 0, 0.75);
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 0;
+        white-space: nowrap !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 180px;
+        &.mpd-active {
+            color: black;
+            font-weight: 600;
+            .bp3-control-indicator {
+                background-color: #1f76ff !important;
+            }
+        }
+        .bp3-control-indicator {
+        box-shadow: none !important;
+        outline: none !important;
+        background-image: none;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        border-radius: 4px !important;
+        }
+    }
+
+    .bp3-control input:checked ~ .bp3-control-indicator {
+        border: none !important;
+    }
+
+    .bp3-icon {
+        border-radius: 4px;
+        background-color: #1f76ff;
+    }
+
+    div:nth-child(2) {
+        flex: 1;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 12px;
+        font-weight: 400;
+    }
+    .group-list-item-type {
+        text-transform: capitalize;
+        text-align: center;
+        justify-content: center;
+        min-width: 60px;
+        border-radius: 2px;
+        padding: 5px 15px;
+        font-weight: 600;
+        font-size: 9px;
+    }
+    .public {
+        background-color: #c5dcff;
+    }
+    .private {
+        background-color: #c3c3c3;
+    }
+    div:last-child {
+        color: rgba(0, 0, 0, 0.75);
+        font-size: 12px;
+        font-weight: 600;
+    }
+}
+
+.group-list-item-description {
+    white-space: nowrap;
+}
+
+.group-list-item-members {
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .groups-list-item-container {
+        .bp3-control {
+            width: 70px;
+        }
+    }
+    .group-list-item-description {
+        // display: none;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 30px;
+    }
+}

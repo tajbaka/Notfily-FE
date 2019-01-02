@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+.mpd-scrollable-div-container {
+  width: initial;
+  position: relative;
+  overflow: hidden; }
+  .mpd-scrollable-div-container.y-direction {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll; }
+  .mpd-scrollable-div-container.x-direction {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: scroll; }
+
+.mpd-scrollable-div-inner-container {
+  width: 100%;
+  z-index: -1;
+  height: 100%;
+  position: absolute; }
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent; }
+
+/*# sourceMappingURL=styles.css.map */

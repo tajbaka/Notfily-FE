@@ -1,0 +1,17 @@
+.start-end-timer {
+  display: flex;
+  align-items: center; }
+  .start-end-timer .mpd-select-label {
+    margin-right: 12px; }
+  .start-end-timer .mpd-select {
+    min-width: 140px; }
+
+.start-end-timer-seperator {
+  margin: 0 15px;
+  padding: 0 10px;
+  color: black;
+  border: solid 1px black;
+  border-width: 0px 0px 1px 0px;
+  height: 2px; }
+
+/*# sourceMappingURL=styles.css.map */

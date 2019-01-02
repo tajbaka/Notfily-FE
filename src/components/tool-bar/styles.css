@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.tool-bar {
+  height: 50px;
+  z-index: 100;
+  background: none !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15); }
+  .tool-bar.mpd-loading {
+    pointer-events: none; }
+  .tool-bar .bpd-navbar {
+    white-space: nowrap; }
+  .tool-bar .mpd-align-center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    z-index: -1; }
+
+/*# sourceMappingURL=styles.css.map */

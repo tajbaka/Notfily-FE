@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACQ,gEAAwD;ACChE,mBAAoB;EAChB,MAAM,EAAE,IAAI",
+"sources": ["../../../../notifly/src/mpd-library/common/variables.scss","styles.scss"],
+"names": [],
+"file": "styles.css"
+}

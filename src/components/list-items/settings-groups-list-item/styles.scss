@@ -1,0 +1,67 @@
+.settings-groups-list-item-container {
+    display: flex;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+    align-items: center;
+    padding: 10px 15px;
+    user-select: none;
+    cursor: pointer;
+    .mpd-select-label {
+        color: #ff6b6b;
+    }
+    .mpd-select-container {
+        width: 100%;
+    }
+    .no-line-blue {
+        height: 40px;
+        .mpd-select {
+            min-width: 100px;
+            height: 40px;
+            padding: 0px 20px 0px 15px;
+        }
+        .mpd-select-label {
+            margin-right: 20px;
+        }
+    }
+    .groups-list-item-container {
+        border-bottom: 0;
+        padding: 0;
+        flex: 1;
+    }
+    .settings-select-wrapper {
+        min-width: 237px;
+        margin-left: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .mpd-select-text-container {
+        color: #ff6b6b;
+    }
+    &.mpd-active {
+        .settings-social-account-list-item-title {
+            color: #000000;
+        }
+        .mpd-select-label {
+            color: #1f76ff;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-groups-list-item-container {
+        .settings-select-wrapper {
+            margin-left: 0;
+            display: flex;
+            align-items: start;
+            min-width: initial;
+            .label {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 60px;
+            }
+            .mpd-select-inner-container {
+                min-width: initial;;
+            }
+        }
+    }
+}

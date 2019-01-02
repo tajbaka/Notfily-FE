@@ -1,0 +1,65 @@
+@import "../../common/variables.scss";
+
+.settings-groups-member-list-item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+    user-select: none;
+    .settings-select-wrapper {
+        width: 230px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .mpd-select-text-container {
+        color: #ff6b6b;
+    }
+    .mpd-select-container {
+        width: 100%;
+    }
+    &.mpd-active {
+        .mpd-select-text-container {
+            color: #1f76ff;
+        }
+    }
+}
+
+.settings-groups-member-list-item-checkbox-label-container {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.settings-groups-member-list-item-container {
+    .styled-checkbox {
+        align-items: center;
+        display: flex;
+        margin-bottom: 0;
+    }
+}
+
+.settings-groups-member-list-item-label-initials  {
+    border-radius: 50%;
+    background-color: #1f76ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 33px;
+    height: 33px;
+    min-width: 33px;
+    min-height: 33px;
+    color: white;
+    font-family: $font-family;
+}
+
+.settings-groups-member-list-item-label-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+@media (max-width: 480px) {
+}

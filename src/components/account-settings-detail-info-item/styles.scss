@@ -1,0 +1,16 @@
+@import "../common/variables.scss";
+
+.account-settings-info-item {
+    display: flex;
+    padding: 10px 0;
+    user-select: none;
+}
+
+.account-settings-info-item-text {
+    color: rgba(0, 0, 0, 0.75);
+    font-family: $font-family;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 15px;
+    max-width: 150px;
+}

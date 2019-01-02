@@ -1,0 +1,50 @@
+@import "./common/variables";
+
+.generic-alert {
+    width: initial;
+    max-width: 400px;
+    display: none;
+    background: white !important;
+    .bp3-alert-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .bp3-alert-contents {
+      width: 100%;
+    }
+    .bp3-alert-footer {
+      margin-top: 20px;
+      .bp3-button {
+        outline: none;
+      }
+      .bp3-button:first-child {
+        background-image: none !important;
+        box-shadow: none !important;
+        color: #ffffff;
+        width: 96px;
+        font-family: $font-family;
+        background-image: none;
+        height: 32px;
+        border-radius: 4px;
+        background-color: #394d61 !important;
+      }
+      .bp3-button:last-child {
+        background-color: white !important;
+        background-image: none !important;
+        box-shadow: none !important;
+        color: #394d61;
+        width: 96px;
+        height: 32px;
+        border: 1px solid rgba(0, 0, 0, 0.25) !important;
+        border-radius: 4px;
+        font-family: $font-family;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+    }
+  }

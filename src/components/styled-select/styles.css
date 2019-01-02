@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.primary-color {
+  cursor: pointer; }
+  .primary-color .mpd-select-label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #394d61; }
+  .primary-color .mpd-select-option {
+    color: #394d61;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px; }
+  .primary-color .mpd-select-option:hover {
+    background-color: #22c488;
+    color: #fff; }
+
+.no-line-blue .mpd-select-label {
+  font-family: "Open Sans", sans-serif;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 16px;
+  font-weight: 600; }
+.no-line-blue .mpd-select-option {
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px; }
+.no-line-blue .mpd-select-option:hover {
+  background-color: #1f76ff;
+  color: #fff; }
+.no-line-blue .mpd-select {
+  border: none; }
+.no-line-blue .mpd-select-arrow-icon {
+  right: 5px; }
+
+.line-blue .line-blue-label {
+  text-transform: uppercase;
+  color: #1f76ff;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600; }
+.line-blue .mpd-select-label {
+  font-family: "Open Sans", sans-serif;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 16px;
+  font-weight: 600; }
+.line-blue .mpd-select-option {
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px; }
+.line-blue .mpd-select-option:hover {
+  background-color: #1f76ff;
+  color: #fff; }
+.line-blue .mpd-select {
+  border-color: #1f76ff;
+  border-width: 0px 0px 1px 0px;
+  border-radius: 0;
+  padding-left: 0; }
+.line-blue .mpd-select-arrow-icon {
+  right: 5px; }
+
+.image-blue .mpd-select-options {
+  width: 120px; }
+.image-blue .mpd-select-option {
+  color: black;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px; }
+.image-blue .mpd-select-option:hover {
+  background-color: #1f76ff;
+  color: #fff; }
+.image-blue .mpd-select {
+  background: white;
+  padding: 0px 0px 0px 7px;
+  height: 30px;
+  width: 55px; }
+.image-blue .mpd-select-arrow-icon {
+  right: 7px; }
+
+/*# sourceMappingURL=styles.css.map */
