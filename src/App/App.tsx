@@ -1,12 +1,9 @@
 // tslint:disable
-import { AdminSchedule, Settings, UserSchedule } from "../containers";
+import { AdminSchedule, Settings, UserSchedule, Error } from "../containers";
 import SignIn from "../containers/signin/signin";
 import SignOut from "../containers/signout/signout";
-import UserSignOut from "../containers/user-signout/user-signout";
 
 import reducers from "../reducers/";
-
-import { globalActions } from "../actions";
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -61,8 +58,8 @@ class App extends React.Component<IAppProps, IAppState> {
 
       window.addEventListener("storage", e => {
         if (
-          (!isAuthenticated("auth") || !isAuthenticated('userAuth')) && 
-          history.location.pathname !== "/signin"
+          (!isAuthenticated('adminAuth') || !isAuthenticated('userAuth')) && history &&
+            history.location.pathname !== "/signin"
         ) {
           this.setState({ forceSignout: true });
         }
@@ -72,16 +69,6 @@ class App extends React.Component<IAppProps, IAppState> {
 
   public render() {
     const store = createStore(reducers, {}, applyMiddleware(thunkMiddleware));
-    store.dispatch(globalActions.onUpdateWindowWidth(window.innerWidth));
-    store.dispatch(globalActions.onUpdateWindowHeight(window.innerHeight));
-    store.dispatch(globalActions.onUpdateDeviceType());
-    store.dispatch(globalActions.onGetProfileData());
-    window.addEventListener("resize", () => {
-      store.dispatch(globalActions.onUpdateWindowWidth(window.innerWidth));
-      store.dispatch(globalActions.onUpdateWindowHeight(window.innerHeight));
-    });
-
-
     const { forceSignout, maxHeight } = this.state;
 
     return (
@@ -97,8 +84,11 @@ class App extends React.Component<IAppProps, IAppState> {
               {process.env.REACT_APP_STAGE === "development" ? 
                 <Route
                   render={routeProps => (
+                    <React.Fragment>
                     <AdminSchedule routeProps={routeProps} {...this.props as any} />
-                  )}
+                    {/* {routeProps.history.go} */}
+                    </React.Fragment>
+                    )}
                   path="/schedule"
                 />
                 : 
@@ -106,39 +96,47 @@ class App extends React.Component<IAppProps, IAppState> {
                   component={AdminSchedule}
                   path="/schedule"
                   redirectPath="/signin"
-                  storageItem="auth"
+                  storageItem='adminAuth'
                 />
               }
+              <Route
+                render={routeProps => (
+                  <Error routeProps={routeProps} {...this.props as any} />
+                )}
+                path="/error"
+              />
               <Route
                 render={routeProps => (
                   <UserSchedule routeProps={routeProps} {...this.props as any} />
                 )}
                 path="/user"
               />
-              <PrivateRoute
-                path="/settings"
-                redirectPath="/signin"
-                storageItem="auth"
-                component={Settings}
-              />
+              {process.env.REACT_APP_STAGE === "development" ? 
+                  <Route
+                    render={routeProps => (
+                      <Settings routeProps={routeProps} {...this.props as any} />
+                    )}
+                    path="/settings"
+                  />
+                : 
+                <PrivateRoute
+                  path="/settings"
+                  redirectPath="/signin"
+                  storageItem='adminAuth'
+                  component={Settings}
+                />
+              }
               <PrivateRoute
                 path="/signout"
                 redirectPath="/signin"
-                storageItem="auth"
+                storageItem='adminAuth'
                 forceSignout={forceSignout}
                 component={SignOut}
-              />
-              <PrivateRoute
-                path="/user-signout"
-                redirectPath="/user"
-                storageItem="userAuth"
-                forceSignout={forceSignout}
-                component={UserSignOut}
               />
               <Route
                 path="/signin"
                 render={routeProps =>
-                  isAuthenticated("auth") ? (
+                  isAuthenticated('adminAuth') ? (
                     <Redirect to="/schedule" />
                   ) : (
                     <SignIn routeProps={routeProps} {...this.props as any} />

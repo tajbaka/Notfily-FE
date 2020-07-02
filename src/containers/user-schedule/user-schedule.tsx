@@ -5,11 +5,15 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { authActions, scheduleActions } from 'src/actions';
 
-import { FloatingInput, StyledButton, StyledSelect, ToolBar } from 'src/components';
+import { Redirect } from "react-router-dom";
+
+import { StyledAlert, StyledButton, StyledInput, StyledSelect, ToolBar } from 'src/components';
+
+import { language } from '../';
 
 import BigCalendar from 'react-big-calendar';
 
-import { Alert, Text } from "@blueprintjs/core";
+import { Spinner, Text } from "@blueprintjs/core";
 
 import * as moment from 'moment';
 
@@ -18,14 +22,23 @@ import "./styles.css";
 export interface IUserScheduleProps {
   authenticated: boolean;
   settings: any;
-  schedule: any;
+  error?: string;
+  userSchedule: any;
+  loading?: boolean;
+  schedules: any;
+  signinError: string;
   routeProps?: any;
-  onSaveChanges: (schedule: any) => (dispatch: Dispatch<any>) => Promise<void>;
-  onCreateAccount: (email: string, password: string, authString: string) => (dispatch: Dispatch<any>) => Promise<void>;
-  logoutUserAction: (authString?: string) => (dispatch: Dispatch<any>) => Promise<void>;
+  onGetAdminData: (adminUid:string) => (dispatch: Dispatch<any>) => Promise<void>;
+  onGetUserData: (userUid:string, adminUid: string) => (dispatch: Dispatch<any>) => Promise<void>;
+  onSaveChanges: (schedules: any, adminUid: string) => (dispatch: Dispatch<any>) => Promise<void>;
+  onUpdateUser: (user: any, adminUid: string, userUid: string) => (dispatch: Dispatch<any>) => Promise<void>;
+  onCreateUser: (schedules: any, adminUid: string, email: string, password: string, authString: string, name: string, phoneNumber:string, language: string) => (dispatch: Dispatch<any>) => Promise<void>;
+  logoutAction: (authString?: string) => (dispatch: Dispatch<any>) => Promise<void>;
 }
 
 interface IUserScheduleState {
+  adminUid: string;
+  userUid: string;
   authenticated: boolean;
   actionPressed?: string;
   localizer: any;
@@ -34,7 +47,9 @@ interface IUserScheduleState {
   showAlert: boolean;
   tempStart?: Date;
   tempEnd?: Date;
-  currentSchedule: any;
+  scheduleIndex: number;
+  userSchedule: any;
+  view: any;
 }
 
 export class UserSchedule extends React.Component<IUserScheduleProps, IUserScheduleState> {
@@ -52,37 +67,67 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
     this.onAlertSignInputChanged = this.onAlertSignInputChanged.bind(this);
     this.onChangeSchedule = this.onChangeSchedule.bind(this);
     this.onSlotGetter = this.onSlotGetter.bind(this);
+    this.onUpdateLanguage = this.onUpdateLanguage.bind(this);
 
-    const { schedule, settings } = this.props;
+    const { settings, routeProps, userSchedule } = this.props;
+
+    const pathArr = routeProps.history.location.pathname.split('/');
+    const adminUid = pathArr[pathArr.length - 1];
+    this.props.onGetAdminData(adminUid);
+
     let { authenticated } = this.props;
     const timeSlots = 60/settings.timeSplit;
 
-    const currentSchedule = JSON.parse(JSON.stringify(schedule.schedules[0]));
+    let auth = localStorage.getItem('userAuth');
+    auth = auth && JSON.parse(auth);
 
-    const events = currentSchedule.events;
-
-    const auth = localStorage.getItem('userAuth');
     if(auth !== null) {
       authenticated = true;
     }
 
-    for(let i = 0; i < events.length; i++ ){
-        events[i].start = new Date(events[i].start);
-        events[i].end = new Date(events[i].end);
-    }
+    const isMobile = window.innerWidth <= 480;
 
     this.state = {
-        authenticated,
-        currentSchedule,
-        localizer,
-        showAlert: false,
-        timeSlots
+      adminUid,
+      scheduleIndex: 0,
+      userUid: auth && (auth as any).user.uid,
+      authenticated,
+      localizer,
+      showAlert: false,
+      timeSlots,
+      userSchedule: JSON.parse(JSON.stringify(userSchedule)),
+      view: isMobile ? 'day' : 'week'
     }
+    this.props.onGetUserData(this.state.userUid, adminUid);
   }
 
   public componentWillReceiveProps(nextProps: IUserScheduleProps){
     if(nextProps.authenticated !== this.props.authenticated){
-      this.setState({ authenticated: nextProps.authenticated });
+      if(nextProps.authenticated){
+        this.setState({ selectedEvent: undefined, tempStart: undefined, tempEnd: undefined, showAlert: false }, () => {
+          this.addExitButtons();
+        });
+      }
+      this.setState({ authenticated: nextProps.authenticated })
+    }
+    if(this.props.schedules !== nextProps.schedules) {
+      setTimeout(() => {
+          const toolBarGroups = document.getElementsByClassName("rbc-btn-group");
+          const navBar = toolBarGroups[0];
+          if(navBar){
+            const navButtons = navBar.childNodes;
+            navButtons[1].textContent = '<';
+            navButtons[2].textContent = '>';
+            this.addExitButtons();
+          }
+      }, 100);
+    }
+    if(this.props.userSchedule !== nextProps.userSchedule){
+      this.setState({ userSchedule: nextProps.userSchedule });
+    }
+    if(this.props.settings !== nextProps.settings){
+      const timeSlots = 60/nextProps.settings.timeSplit;
+      this.setState({ timeSlots });
     }
   }
 
@@ -97,156 +142,225 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
 
   public render() {
     const classes = 'user-schedule';
-    const { schedule, settings } = this.props;
-    const { authenticated, actionPressed, currentSchedule, localizer, timeSlots, selectedEvent, showAlert, tempStart, tempEnd } = this.state;
+    const { settings, error, loading, signinError } = this.props;
+    const { authenticated, actionPressed, userSchedule, scheduleIndex, localizer, selectedEvent, showAlert, tempStart, tempEnd, view } = this.state;
     const startTime = moment(settings.startTime, 'h: mm a').toDate();
     const endTime = moment(settings.endTime, 'h: mm a').toDate();
+    const schedules = JSON.parse(JSON.stringify(this.props.schedules[scheduleIndex]))
+    const events = schedules.events;
+    if(error){
+      return(
+          <Redirect to="/error" />
+      );
+    }
+
+    if(events && events.length > 0){
+      for(let i = 0; i < events.length; i++){
+          events[i].start = new Date(events[i].start);
+          events[i].end = new Date(events[i].end);
+          if(userSchedule.userName === undefined || events[i].createdBy !== userSchedule.userName){
+            events[i].title = language[userSchedule.language].cannotBookHere;
+          }
+      }
+    }
 
     return (
       <div className={classNames(classes)}>
-          {this.renderTopBar(classes)}
+          {loading && <Spinner className={classes + '-spinner'} size={30} />}
+          {this.renderTopBar()}
           <div className={classes + '-inner-container'}>
             <BigCalendar
+              className={classNames(classes + '-rbc-calendar', userSchedule.language, view)}
               localizer={localizer}
-              events={currentSchedule.events}
+              longPressThreshold={0}
+              events={events || []}
               min={startTime}
               max={endTime}
               slotPropGetter={this.onSlotGetter}
-              onView={e => setTimeout(() => {
-                  this.addExitButtons()
-              }, 50)}
+              onView={newView => setTimeout(() => {
+                this.setState({ view: newView })
+                this.addExitButtons()
+            }, 100)}
               onNavigate={e => setTimeout(() => {
                   this.addExitButtons()
-              }, 50)}
-              timeslots={timeSlots}
+              }, 100)}
+              timeslots={1}
               eventPropGetter={this.onEventGetter}
               onSelectEvent={this.onSelectEvent}
               selectable={true}
-              defaultView='week'
+              defaultView={view}
               views={['week', 'day']}
               onSelecting={this.onSelecting}
               onSelectSlot={this.onSelectSlot}
             />
             {actionPressed === 'exit' &&
-              <Alert
-                className={classNames("generic-alert", classes + '-alert')}
-                cancelButtonText="No"
-                confirmButtonText="Yes"
+              <StyledAlert
+                className={classNames(classes + '-alert')}
+                cancelButtonText={language[userSchedule.language].no}
+                confirmButtonText={language[userSchedule.language].yes}
                 isOpen={showAlert}
+                canEscapeKeyCancel={true}
                 canOutsideClickCancel={true}
                 onCancel={this.onAlertCancel}
                 onConfirm={this.onAlertConfirm}
               >   
                 <div className={classes + '-alert-inner-container'}>
-                  <Text className={classes + '-alert-title'}> Are you sure you want to delete? </Text>
+                  <Text className={classes + '-alert-title'}> {language[userSchedule.language].sureDelete} </Text>
                 </div>
-              </Alert>
+              </StyledAlert>
             }
-            {actionPressed === 'error' &&
-              <Alert
-                className={classNames("generic-alert", classes + '-alert')}
-                confirmButtonText="Ok"
+            {actionPressed === 'changeError' &&
+              <StyledAlert
+                className={classNames(classes + '-alert-change-error')}
+                confirmButtonText={language[userSchedule.language].ok}
                 isOpen={showAlert}
+                canEscapeKeyCancel={true}
                 canOutsideClickCancel={true}
                 onConfirm={this.onAlertCancel}
               >   
                 <div className={classes + '-alert-inner-container'}>
-                  <Text className={classes + '-alert-title'}> Appointment cannot be changed { settings.maxChangeTime } hours before </Text>
+                  <Text className={classes + '-alert-title'}> {language[userSchedule.language].appointmentChanged + ' ' + settings.maxChangeTime + ' ' + language[userSchedule.language].hoursBefore}  </Text>
                 </div>
-              </Alert>
+              </StyledAlert>
             }
-            {(!authenticated && tempStart && tempEnd) &&
-              <Alert
-                className={classNames("generic-alert", classes + '-alert')}
-                cancelButtonText="Cancel"
-                confirmButtonText="Confirm"
+            {(!authenticated && tempStart && tempEnd) &&  actionPressed !== 'changeError' &&
+              <StyledAlert
+                className={classNames(classes + '-alert')}
+                cancelButtonText={language[userSchedule.language].cancel}
+                confirmButtonText={language[userSchedule.language].confirm}
                 isOpen={showAlert}
+                canEscapeKeyCancel={true}
                 canOutsideClickCancel={true}
                 onCancel={this.onAlertCancel}
                 onConfirm={this.onAlertConfirm}
               >   
                 <div className={classes + '-alert-inner-container'}>
-                  <Text className={classes + '-alert-title'}> Edit Event </Text>
-                  <Text className={classes + '-alert-input-label'}> EVENT TITLE </Text>
-                  <div className={classes + '-alert-input-container'}>
-                    <Text className={classes + '-alert-input-fixed'}> Arian Taj Event </Text>
-                    <FloatingInput
+                  <Text className={classes + '-alert-title'}> {language[userSchedule.language].event} </Text>
+                  <div className={classes + '-alert-details-new-container'}>
+                    <StyledInput
                       className={classes + '-alert-input'}
+                      inputType='floating'
                       autoCapitalize="none"
                       autoCorrect="none"
+                      required={true}
                       maxCounter={50}
                       floatingType="settings"
-                      value={selectedEvent.title.replace('Arian Taj Event', '')}
+                      value={selectedEvent.title.replace(userSchedule.userName + ` ${language[userSchedule.language].event} `, '')}
                       onChange={(e: any) => this.onAlertInputChanged(e)}
-                      placeholder=""
+                      placeholder={language[userSchedule.language].eventTitle}
                       tabIndex={1}
                     />
+                    <StyledInput
+                      className={classes + '-alert-input'}
+                      inputType='floating'
+                      autoCapitalize="none"
+                      autoCorrect="none"
+                      required={true}
+                      floatingType="settings"
+                      value={userSchedule.userName}
+                      onChange={(e: any) => this.onAlertSignInputChanged(e, 'userName')}
+                      placeholder={language[userSchedule.language].name}
+                      tabIndex={1}
+                    />
+                    <StyledInput
+                      className={classes + '-alert-input'}
+                      inputType='floating'
+                      autoCapitalize="none"
+                      autoCorrect="none"
+                      required={true}
+                      floatingType="settings"
+                      value={userSchedule.userEmail}
+                      onChange={(e: any) => this.onAlertSignInputChanged(e, 'userEmail')}
+                      placeholder={language[userSchedule.language].email}
+                      tabIndex={1}
+                    />
+                    <StyledInput
+                      className={classes + '-alert-input'}
+                      inputType='floating'
+                      autoCapitalize="none"
+                      autoCorrect="none"
+                      required={true}
+                      floatingType="settings"
+                      value={userSchedule.userPhoneNumber}
+                      onChange={(e: any) => this.onAlertSignInputChanged(e, 'userPhoneNumber')}
+                      placeholder={language[userSchedule.language].phoneNumber}
+                      tabIndex={1}
+                    />
+                    <Text className={classNames(classes + '-sign-in-error', signinError && signinError.length > 0 && 'active')}> { signinError } </Text>
                   </div>
-                  <FloatingInput
-                    className={classes + '-alert-input'}
-                    autoCapitalize="none"
-                    autoCorrect="none"
-                    required={true}
-                    floatingType="settings"
-                    value={schedule.userName}
-                    onChange={(e: any) => this.onAlertSignInputChanged(e, 'userName')}
-                    placeholder="NAME"
-                    tabIndex={1}
-                  />
-                  <FloatingInput
-                    className={classes + '-alert-input'}
-                    autoCapitalize="none"
-                    autoCorrect="none"
-                    required={true}
-                    floatingType="settings"
-                    value={schedule.userEmail}
-                    onChange={(e: any) => this.onAlertSignInputChanged(e, 'userEmail')}
-                    placeholder="EMAIL"
-                    tabIndex={1}
-                  />
-                  <FloatingInput
-                    className={classes + '-alert-input'}
-                    autoCapitalize="none"
-                    autoCorrect="none"
-                    required={true}
-                    floatingType="settings"
-                    value={schedule.userPhoneNumber}
-                    onChange={(e: any) => this.onAlertSignInputChanged(e, 'userPhoneNumber')}
-                    placeholder="PHONE NUMBER"
-                    tabIndex={1}
-                  />
                 </div>
-              </Alert>
+              </StyledAlert>
             }
-            {(actionPressed === 'edit' || (tempStart && tempEnd && authenticated)) && selectedEvent &&
-              <Alert
-                className={classNames("generic-alert", classes + '-alert')}
-                cancelButtonText="Cancel"
-                confirmButtonText="Confirm"
+            {actionPressed === 'clicked' && selectedEvent &&
+              <StyledAlert
+                  className={classNames(classes + '-alert')}
+                  cancelButtonText={language[userSchedule.language].cancel}
+                  confirmButtonText={language[userSchedule.language].ok}
+                  canEscapeKeyCancel={true}
+                  canOutsideClickCancel={true}
+                  isOpen={showAlert}
+                  onCancel={this.onAlertCancel}
+                  onConfirm={this.onAlertConfirm}
+              >
+                <div className={classes + '-alert-inner-container'}>
+                  <Text className={classes + '-alert-title'}> {language[userSchedule.language].alertDetails} </Text>
+                  <div className={classes + '-alert-details-container'}>
+                      <div className={classes + '-alert-details-labels'}>
+                          <Text className={classes + '-alert-label'}> {language[userSchedule.language].time} </Text>
+                          <Text className={classes + '-alert-label'}> {language[userSchedule.language].title} </Text>
+                      </div>
+                      <div className={classes + '-alert-details'}>
+                          <Text className={classes + '-alert-detail'}> { selectedEvent.time } </Text>
+                          <StyledInput
+                            className={classes + '-alert-input'}
+                            inputType='floating'
+                            autoCapitalize="none"
+                            autoCorrect="none"
+                            maxCounter={50}
+                            floatingType="settings"
+                            value={selectedEvent.title.replace(userSchedule.userName + ` ${language[userSchedule.language].event} `, '')}
+                            onChange={(e: any) => this.onAlertInputChanged(e)}
+                            placeholder=""
+                            tabIndex={1}
+                        />
+                          {/* <Text className={classes + '-alert-detail'}> { selectedEvent.title } </Text> */}
+                      </div>
+                  </div>
+                </div>
+              </StyledAlert>
+            }
+            {(actionPressed === 'new' && (tempStart && tempEnd && authenticated)) && selectedEvent &&
+              <StyledAlert
+                className={classNames(classes + '-alert')}
+                confirmButtonText={language[userSchedule.language].confirm}
                 isOpen={showAlert}
+                cancelButtonText={language[userSchedule.language].cancel}
+                canEscapeKeyCancel={true}
                 canOutsideClickCancel={true}
                 onCancel={this.onAlertCancel}
                 onConfirm={this.onAlertConfirm}
               >   
                 <div className={classes + '-alert-inner-container'}>
-                  <Text className={classes + '-alert-title'}> Edit Event </Text>
-                  <Text className={classes + '-alert-input-label'}> EVENT TITLE </Text>
-                  <div className={classes + '-alert-input-container'}>
-                    <Text className={classes + '-alert-input-fixed'}> Arian Taj Event </Text>
-                    <FloatingInput
-                        className={classes + '-alert-input'}
-                        autoCapitalize="none"
-                        autoCorrect="none"
-                        maxCounter={50}
-                        floatingType="settings"
-                        value={selectedEvent.title.replace('Arian Taj Event', '')}
-                        onChange={(e: any) => this.onAlertInputChanged(e)}
-                        placeholder=""
-                        tabIndex={1}
-                    />
+                  <Text className={classes + '-alert-title'}> {language[userSchedule.language].event} </Text>
+                  <div className={classes + '-alert-details-new-container'}>
+                    <Text className={classes + '-alert-input-label'}> {language[userSchedule.language].eventTitle} </Text>
+                    <div className={classes + '-alert-input-container'}>
+                      <StyledInput
+                          className={classes + '-alert-input'}
+                          inputType='floating'
+                          autoCapitalize="none"
+                          autoCorrect="none"
+                          maxCounter={50}
+                          floatingType="settings"
+                          value={selectedEvent.title.replace(userSchedule.userName + ` ${language[userSchedule.language].event} `, '')}
+                          onChange={(e: any) => this.onAlertInputChanged(e)}
+                          placeholder=""
+                          tabIndex={1}
+                      />
+                    </div>
                   </div>
                 </div>
-              </Alert>
+              </StyledAlert>
             }
           </div>
       </div>
@@ -254,10 +368,10 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
   }
 
   private onAlertSignInputChanged(event: any, type: string){
-    const { schedule } = this.props;
+    const { userSchedule } = this.state;
     const value = event.currentTarget.value;
-    schedule[type] = value;
-    this.props.onSaveChanges(schedule);
+    userSchedule[type] = value;
+    this.setState({ userSchedule });
   }
 
   private onAlertInputChanged(event: any) {
@@ -272,88 +386,145 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
   }
 
   private onAlertConfirm(){
-    const { schedule } = this.props;
-    const { actionPressed, currentSchedule, selectedEvent, tempEnd, tempStart } = this.state;
+    let { schedules } = this.props;
+    schedules = JSON.parse(JSON.stringify(schedules));
+    const { authenticated, adminUid, actionPressed, scheduleIndex, userSchedule, selectedEvent, tempEnd, tempStart } = this.state;
 
     if(actionPressed === 'exit'){
-      const index = currentSchedule.events.findIndex((ele: any) => ele.id === selectedEvent.id);
+      const index = schedules[scheduleIndex].events.findIndex((ele: any) => ele.id === selectedEvent.id);
       if(index !== undefined){
-          currentSchedule.events.splice(index, 1);
+        schedules[scheduleIndex].events.splice(index, 1);
       }
-      this.props.onSaveChanges(schedule);
-      this.setState({ actionPressed: undefined, selectedEvent: undefined, showAlert: false })
+      this.setState({ actionPressed: undefined, selectedEvent: undefined, showAlert: false }, () => {
+        this.props.onSaveChanges(schedules, adminUid);
+      })
     }
-    else if(actionPressed === 'edit'){
-      const index = currentSchedule.events.findIndex((ele: any) => ele.id === selectedEvent.id);
+    else if(actionPressed === 'clicked'){
+      const index = schedules[scheduleIndex].events.findIndex((ele: any) => ele.id === selectedEvent.id);
       if(index !== undefined){
-          let title = selectedEvent.title;
-          if(!title.includes('Arian Taj Event')){
-              title = 'Arian Taj Event \n' + title;
-          }
-          currentSchedule.events[index].title = title;
-      }
-      this.props.onSaveChanges(schedule);
-      this.setState({ actionPressed: undefined, selectedEvent: undefined, showAlert: false })
-    }
-    else if(actionPressed === undefined && tempStart && tempEnd){
-      let title = selectedEvent.title;
-        if(!title.includes('Arian Taj Event')){
-            title = 'Arian Taj Event \n' + title;
+        let title = selectedEvent.title;
+        let changesMade = false;
+        if(title !== schedules[scheduleIndex].events[index].title){
+            changesMade = true;
         }
-      const event = { id: selectedEvent.id, start: selectedEvent.start, end: selectedEvent.end, title, type: selectedEvent.type, timeStamp: new Date() };
-      currentSchedule.events.push(event);
-      this.props.onSaveChanges(schedule);
-      this.setState({ selectedEvent: undefined, showAlert: false, tempStart: undefined, tempEnd: undefined }, () => {
-          this.addExitButtons();
-          this.props.onCreateAccount(schedule.userEmail, 'testing', 'userAuth');
-          schedule.userName = '';
-          schedule.userEmail = '';
-          schedule.userPhoneNumber = '';
-        this.props.onSaveChanges(schedule);
-      });
+        if(!title.includes(userSchedule.userName)){
+          title = `${userSchedule.userName + ' ' + language[userSchedule.language].event} \n` + title;
+        }
+        schedules[scheduleIndex].events[index].title = title;
+        if(changesMade){
+          this.setState({ actionPressed: undefined, selectedEvent: undefined, showAlert: false }, () => {
+            this.props.onSaveChanges(schedules, adminUid);
+          })
+        }
+        else {
+          this.setState({ actionPressed: undefined, selectedEvent: undefined, showAlert: false });
+        }
+      }
+    }
+    else if(actionPressed === 'new' && tempStart && tempEnd){
+      let title = selectedEvent.title;
+      if(!title.includes(userSchedule.name)){
+        title = `${userSchedule.userName + ' ' + language[userSchedule.language].event} \n` + title;
+      }
+      const event = { id: selectedEvent.id, createdBy: userSchedule.userName, start: selectedEvent.start, end: selectedEvent.end, title, phoneNumber: userSchedule.userPhoneNumber, email: userSchedule.userEmail, type: selectedEvent.type, timeStamp: new Date() };
+
+      if(schedules[scheduleIndex].events){
+        schedules[scheduleIndex].events.push(event);
+      }
+      else {
+        schedules[scheduleIndex].events = [event];
+      }
+
+      if(authenticated) {
+        this.setState({ actionPressed: undefined, selectedEvent: undefined, tempStart: undefined, tempEnd: undefined, showAlert: false }, () => {
+          this.props.onSaveChanges(schedules, adminUid);
+        });
+      }
+      else {
+        console.log(userSchedule)
+        this.props.onCreateUser(schedules, adminUid, userSchedule.userEmail, 'testing', 'userAuth', userSchedule.userName, userSchedule.userPhoneNumber, userSchedule.language);
+      }
+    }
+  }
+
+  private onSelectSlot(slotInfo: any) {
+    const { userSchedule } = this.state;
+    const { start, end } = slotInfo;
+
+    if(slotInfo.box === undefined){
+      const formattedStart = moment(start).format('h:mm a');
+      const formattedEnd = moment(end).format('h:mm a');
+      const time = formattedStart  + ' - ' + formattedEnd;
+      const id = Math.floor(Math.random()*(999-100+1)+100).toString();
+
+      const selectedEvent = {
+        id,
+        phoneNumber: userSchedule.userPhoneNumber,
+        email: userSchedule.userEmail,
+        title: '',
+        time,
+        start,
+        end,
+        type: 'event'
+      }
+      
+      this.setState({ selectedEvent, showAlert: true, tempStart: start, tempEnd: end, actionPressed: 'new' });
     }
   }
 
   private onSelectEvent(event: any){
     const { settings } = this.props;
-    const { actionPressed } = this.state;
+    const { actionPressed, userSchedule } = this.state;
     const today = new Date();
     const maxDate = new Date();
-    maxDate.setHours(today.getHours() + settings.maxChangeTime);
-
+    maxDate.setHours(today.getHours() + parseInt(settings.maxChangeTime, 10));
     const timeStamp = new Date(event.timeStamp);
-    timeStamp.setMinutes(timeStamp.getMinutes() + 1);
+    timeStamp.setMinutes(timeStamp.getMinutes() + 5);
 
-    if(actionPressed !== undefined && maxDate > event.start && today > timeStamp ) {
-      this.setState({ actionPressed: 'error' })
+    const start = moment(event.start).format('h:mm a');
+    const end = moment(event.end).format('h:mm a');
+    const time = start  + ' - ' + end;
+
+    const selectedEvent = {
+      id: event.id,
+      phoneNumber: event.phoneNumber,
+      email: event.email,
+      title: event.title,
+      time,
+      type: event.type,
+      timeStamp: event.timeStamp
+    }
+
+    if(actionPressed !== undefined &&  maxDate > event.start && today > timeStamp) {
+      this.setState({ actionPressed: 'changeError' });
+    }
+    else if(actionPressed === undefined && !event.title.includes(language[userSchedule.language].cannotBookHere)){
+      this.setState({ actionPressed: 'clicked', showAlert: true, selectedEvent });
     }
     else {
-      const start = moment(event.start).format('h:mm a');
-      const end = moment(event.end).format('h:mm a');
-
-      const time = start  + ' - ' + end;
-      const selectedEvent = {
-        id: event.id,
-        phoneNumber: '(289) 212-2592',
-        email: 'ariant2015@gmail.com',
-        title: event.title,
-        time,
-        timeStamp: event.timeStamp
-      }
       this.setState({ selectedEvent });
     }
   }
 
   private onEventGetter(event: any, start: any, end: any, isSelected: boolean) {
-    const { currentSchedule } = this.state;
+    const { schedules } = this.props;
+    const { scheduleIndex, userSchedule } = this.state;
     let classObj = { className: '' }
-    const blockEvents = currentSchedule.events.filter((element:any) => element.type === 'block');
+    const blockEvents = schedules[scheduleIndex].events.filter((element:any) => element.createdBy !== userSchedule.userName);
+    const ownEvents = schedules[scheduleIndex].events.filter((element:any) => element.createdBy === userSchedule.userName);
     for(let i = 0; i < blockEvents.length; i++){
         const startDate = new Date(blockEvents[i].start);
         const endDate = new Date(blockEvents[i].end);
         if((start >= startDate && end <= endDate) ){
             classObj = { className: 'block-event' }
         }
+    }
+    for(let i = 0; i < ownEvents.length; i++){
+      const startDate = new Date(ownEvents[i].start);
+      const endDate = new Date(ownEvents[i].end);
+      if((start >= startDate && end <= endDate) ){
+          classObj = { className: 'own-event' }
+      }
     }
     return classObj;
   }
@@ -364,37 +535,43 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
         className: ''
     }
     const maxDate = new Date(Date.now() + (6.04e+8 * settings.maxScheduledTime) );
-      if(date > maxDate){
-        obj.className = 'max-date'
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() - 1);
+      if(date > maxDate || date < minDate){
+        obj.className = 'unselectable-date'
       }
       return obj;
   }
 
   private onSelecting(range: { start: any, end: any }){
     const { start, end } = range;
-    const { currentSchedule } = this.state;
-
-    const { settings } = this.props;
+    const { scheduleIndex } = this.state;
+    const { schedules, settings } = this.props;
     const maxDate = new Date(Date.now() + (6.04e+8 * settings.maxScheduledTime) );
-    if(start > maxDate  ) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if((start > maxDate || end > maxDate) || start < yesterday ) {
         return false;
     }
 
-    for(let i = 0; i < currentSchedule.events.length; i++){
-        const startDate = new Date(currentSchedule.events[i].start);
-        const endDate = new Date(currentSchedule.events[i].end);
-        if((end > startDate && start < startDate) || (start < endDate && end > endDate) || (start >= startDate && end <= endDate)){
-          return false;
-        }
+    const events = schedules[scheduleIndex].events;
+    if(events){
+      for(let i = 0; i < schedules[scheduleIndex].events.length; i++){
+          const startDate = new Date(schedules[scheduleIndex].events[i].start);
+          const endDate = new Date(schedules[scheduleIndex].events[i].end);
+          if((end > startDate && start < startDate) || (start < endDate && end > endDate) || (start >= startDate && end <= endDate)){
+            return false;
+          }
+      }
     }
     return true;
   }
 
   private addExitButtons() {
-    const rbcEvents = document.getElementsByClassName("rbc-event");
+    const rbcEvents = document.getElementsByClassName("own-event");
     const createdEventActionsElement="<div id='tempActionsContainer' class='rbc-event-action-container' class='actionEventContainer' />";
     const createdRemoveEventElement="<button id='tempRemove' class='rbc-event-remove'> filler </button>";
-    const createdEditEventElement="<button id='tempEdit' class='rbc-event-edit'> filler </button>";
+    // const createdEditEventElement="<button id='tempEdit' class='rbc-event-edit'> filler </button>";
     for(let i = 0; i < rbcEvents.length; i++){
       const firstChild = (rbcEvents[i].firstChild as any)
       const id = firstChild.id;
@@ -411,13 +588,10 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
               this.setState({ actionPressed: 'exit', showAlert: true });
             });
           }
-          eventActionsElement.insertAdjacentHTML('afterbegin', createdEditEventElement);
+          // eventActionsElement.insertAdjacentHTML('afterbegin', createdEditEventElement);
           const editEventElement = document.getElementById('tempEdit');
           if(editEventElement){
             editEventElement.id = ('editEvent');
-            editEventElement.addEventListener('click', (e: any) => {
-              this.setState({ actionPressed: 'edit', showAlert: true });
-            });
           }
         }
       }
@@ -425,28 +599,36 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
   }
 
   private onSignOut() {
-    const { routeProps } = this.props;
-    routeProps.history.push('/user-signout');
-    // this.props.logoutUserAction('userAuth');
-    const currentSchedule = JSON.parse(JSON.stringify(this.props.schedule.schedules[0]));
-    this.setState({ currentSchedule })
+    this.props.logoutAction('userAuth');
+    location.reload();
   }
 
-  private onChangeSchedule(event: any){
-    const { schedule } = this.props;
-    const title = event.currentTarget.textContent.substring(1, event.currentTarget.textContent.length-1);;
-    const index = schedule.schedules.findIndex((ele: any) => ele.title === title);
-    const currentSchedule = schedule.schedules[index];
-    this.setState({ currentSchedule });
+  private onChangeSchedule(event: any, index: number){
+    this.setState({ scheduleIndex: index }, () => {
+      this.addExitButtons();
+    });
   }
 
-  private renderTopBar (classes: string) {
-    const { schedule } = this.props;
+  private onUpdateLanguage(event: any) {
+    const { userSchedule } = this.state;
+    const value = event.currentTarget.textContent;
+    let lang = 'english';
+    if(value.includes('spanish')){
+        lang = 'spanish';
+    }
+    userSchedule.language = lang;
+    this.setState({ userSchedule })
+  }
+
+  private renderTopBar () { 
+    const { schedules, userSchedule } = this.props;
     const { authenticated } = this.state;
-    const options = [];
 
-    for(let i = 0; i < schedule.schedules.length; i++){
-        const element = schedule.schedules[i];
+    const options = [];
+    const classes = 'user-schedule';
+
+    for(let i = 0; i < schedules.length; i++){
+        const element = schedules[i];
         options.push(element.title);
     }
 
@@ -463,60 +645,74 @@ export class UserSchedule extends React.Component<IUserScheduleProps, IUserSched
     ),
       centerElement: (
         <Text className={classes + '-title'}>
-          Welcome {schedule.userName}
+          {userSchedule.userName ?
+            language[userSchedule.language].welcome + ' ' + userSchedule.userName
+          :
+            language[userSchedule.language].welcome
+          }
         </Text>
       ),
       rightElement: (
-        authenticated ?
-          <StyledButton
-            className={classes + '-sign-out'}
-            type='white-color'
-            text='Sign Out'
-            onClick={this.onSignOut}
+        <React.Fragment>
+          <StyledSelect
+            type='primary-color'
+            className={classes + '-update-language'}
+            value={userSchedule.language}
+            options={['english', 'spanish']}
+            onChange={this.onUpdateLanguage}
           />
-          :
-          null
+          {authenticated ?
+              <StyledButton
+                className={classes + '-sign-out'}
+                type='white-color'
+                text={language[userSchedule.language].signOut}
+                onClick={this.onSignOut}
+              />
+              :
+              null
+            }
+        </React.Fragment>
       )
   }
     return (
       <ToolBar {...topBarProps as any} />
     );
   }
-
-  private onSelectSlot(slotInfo: any) {
-    const { start, end } = slotInfo;
-    const formattedStart = moment(start).format('h:mm a');
-    const formattedEnd = moment(end).format('h:mm a');
-    const time = formattedStart  + ' - ' + formattedEnd;
-    const id = Math.floor(Math.random()*(999-100+1)+100).toString();
-
-    const selectedEvent = {
-      id,
-      phoneNumber: '(289) 212-2592',
-      email: 'ariant2015@gmail.com',
-      title: 'Arian Taj Event',
-      time,
-      start,
-      end
-    }
-    this.setState({ selectedEvent, showAlert: true, tempStart: start, tempEnd: end })
-  }
 }
 
 const mapStateToProps = (state: any) => {
-  const { schedule, settings, auth } = state;
-  const { authenticated } = auth;
-  return { authenticated, schedule, settings };
+  const { adminSchedule, settings, auth, userSchedule, global } = state;
+  const { authenticated, signinError } = auth;
+  const { schedules, error } = adminSchedule;
+  const { loading } = global;
+  for(let i = 0; i < schedules.length; i++){
+    if(schedules[i].events === undefined){
+      schedules[i].events = [];
+    }
+  }
+  return { authenticated, signinError, schedules, error, settings, loading, userSchedule };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
+    onGetAdminData: bindActionCreators(
+      scheduleActions.onGetAdminData,
+      dispatch
+    ),
+    onGetUserData: bindActionCreators(
+      scheduleActions.onGetUserData,
+      dispatch
+    ),
     onSaveChanges: bindActionCreators(
       scheduleActions.onUpdateSchedule,
       dispatch
     ),
-    onCreateAccount: bindActionCreators(authActions.onCreateAction, dispatch),
-    logoutUserAction: bindActionCreators(authActions.logoutUserAction, dispatch)
+    onUpdateUser: bindActionCreators(
+      scheduleActions.onUpdateUser,
+      dispatch
+    ),
+    onCreateUser: bindActionCreators(authActions.onCreateUser, dispatch),
+    logoutAction: bindActionCreators(authActions.logoutAction, dispatch),
   };
 };
 

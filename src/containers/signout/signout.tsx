@@ -6,7 +6,7 @@ import { authActions } from "../../actions";
 interface ISignOutProps {
   auth: any;
   routeProps: any;
-  logoutUserAction: (authString?: string) => (dispatch: Dispatch<any>) => Promise<void>;
+  logoutAction: (authString?: string) => (dispatch: Dispatch<any>) => Promise<void>;
 }
 
 export class SignOut extends React.Component<ISignOutProps> {
@@ -28,8 +28,8 @@ export class SignOut extends React.Component<ISignOutProps> {
   }
 
   private logoutUser() {
-    if (this.props.logoutUserAction) {
-      this.props.logoutUserAction('auth');
+    if (this.props.logoutAction) {
+      this.props.logoutAction('adminAuth');
     }
   }
 }
@@ -43,7 +43,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
-    logoutUserAction: bindActionCreators(authActions.logoutUserAction, dispatch)
+    logoutAction: bindActionCreators(authActions.logoutAction, dispatch)
   };
 };
 

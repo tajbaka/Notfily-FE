@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.library-floating-input {
+  position: relative;
+  outline: none !important;
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0px 0px 0px; }
+  .library-floating-input input:focus ~ .library-floating-input-label,
+  .library-floating-input input:not(:focus):valid ~ .library-floating-input-label {
+    transition: 0.3s top ease;
+    top: -15px !important;
+    color: #22c488; }
+  .library-floating-input.active input {
+    border-color: #22c488; }
+  .library-floating-input.active .library-floating-input-label {
+    transition: 0.3s top ease;
+    top: -15px;
+    color: #22c488; }
+  .library-floating-input input:focus {
+    border-color: #22c488; }
+  .library-floating-input input {
+    outline: none !important;
+    border-width: 0 0 1px 0;
+    font-size: 16px;
+    font-family: "Open Sans", sans-serif; }
+
+.library-floating-input-label {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  font-size: 12px;
+  font-family: "Open Sans", sans-serif;
+  transform: translateZ(0);
+  font-weight: 600;
+  z-index: 1;
+  pointer-events: none;
+  outline: none !important;
+  transition: 0.3s top ease; }
+
+.library-floating-input-fixed-placeholder {
+  position: absolute;
+  top: 6px;
+  color: rgba(0, 0, 0, 0.25);
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none; }
+
+.library-floating-input-invisible {
+  visibility: hidden;
+  position: absolute;
+  pointer-events: none;
+  user-select: none; }
+
+/*# sourceMappingURL=styles.css.map */

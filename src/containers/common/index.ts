@@ -1,3 +1,2 @@
-import * as commonClasses from "./classes";
-
-export { commonClasses };
+export * from './languages';
+export * from './types';

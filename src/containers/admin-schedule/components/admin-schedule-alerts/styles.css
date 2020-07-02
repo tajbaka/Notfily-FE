@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.admin-schedule-alerts-input-fixed {
+  white-space: nowrap;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  border: solid 1px #22c488;
+  border-width: 0 0 1px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4);
+  font-family: "Open Sans", sans-serif; }
+
+.admin-schedule-alerts-input-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #22c488;
+  font-family: "Open Sans", sans-serif;
+  margin-top: 20px; }
+
+.admin-schedule-alerts-title {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+  user-select: none; }
+
+.admin-schedule-alerts-details-labels, .admin-schedule-alerts-details {
+  display: flex;
+  flex-direction: column; }
+
+.admin-schedule-alerts-details {
+  flex: 1; }
+
+.admin-schedule-alerts-details-labels {
+  margin-right: 25px; }
+
+.admin-schedule-alerts {
+  max-width: 400px !important; }
+
+.admin-schedule-alerts-label {
+  font-size: 13px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #22c488;
+  flex: 1;
+  padding: 10px;
+  user-select: none;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase; }
+
+.admin-schedule-alerts-detail {
+  color: #000;
+  flex: 1;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  user-select: none;
+  padding: 10px;
+  height: 30px;
+  display: flex;
+  align-items: center; }
+
+.admin-schedule-alerts-details-container {
+  display: flex;
+  padding-top: 20px; }
+
+.admin-schedule-alerts-input-container {
+  display: flex;
+  border-bottom-width: 1px; }
+  .admin-schedule-alerts-input-container .library-floating-input-counter {
+    color: #22c488;
+    font-size: 12px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 500;
+    align-self: flex-end; }
+  .admin-schedule-alerts-input-container .library-floating-input {
+    margin-top: 5px; }
+  .admin-schedule-alerts-input-container input {
+    padding-left: 3px;
+    padding-top: 1px;
+    border-color: #22c488 !important; }
+  .admin-schedule-alerts-input-container .library-floating-input-label {
+    top: -10px;
+    color: #22c488 !important; }
+  .admin-schedule-alerts-input-container .floating-input-container {
+    padding-top: 0; }
+
+.admin-schedule-alerts-input {
+  margin-bottom: 30px;
+  flex: 1;
+  height: 100%; }
+  .admin-schedule-alerts-input .library-floating-input-label {
+    z-index: 1; }
+  .admin-schedule-alerts-input .library-floating-input-counter {
+    color: #22c488;
+    font-size: 12px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 500; }
+  .admin-schedule-alerts-input .library-floating-input-counter {
+    color: #22c488;
+    font-size: 12px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 500;
+    align-self: flex-end; }
+  .admin-schedule-alerts-input .library-floating-input {
+    margin-top: 5px; }
+
+/*# sourceMappingURL=styles.css.map */

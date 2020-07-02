@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.styled-button {
+  flex: initial;
+  border-radius: 4px;
+  min-width: initial !important;
+  outline: none !important; }
+  .styled-button .bp3-button-text {
+    font-weight: 700;
+    font-family: "Open Sans", sans-serif;
+    font-size: 10px; }
+  .styled-button.primary-color {
+    padding: 0px 25px !important;
+    background-color: #22c488 !important;
+    height: 30px;
+    min-width: 96px !important; }
+    .styled-button.primary-color .bp3-button-text {
+      color: white;
+      text-transform: uppercase; }
+  .styled-button.primary-color:hover {
+    background-color: #20b67e !important; }
+  .styled-button.primary-color:active {
+    background-color: #189365 !important; }
+  .styled-button.white-color {
+    padding: 0px 25px !important;
+    background-color: white !important;
+    height: 30px;
+    min-width: 96px !important; }
+    .styled-button.white-color .bp3-button-text {
+      color: #394d61;
+      text-transform: uppercase; }
+  .styled-button.white-color:hover {
+    border-color: #22c488 !important; }
+    .styled-button.white-color:hover .bp3-button-text {
+      color: #22c488; }
+  .styled-button.white-color:active {
+    border-color: #22c488 !important;
+    background-color: #defff3 !important; }
+    .styled-button.white-color:active .bp3-button-text {
+      color: #22c488; }
+
+/*# sourceMappingURL=styles.css.map */

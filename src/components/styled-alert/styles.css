@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.styled-alert {
+  display: none;
+  background: white !important; }
+  .styled-alert .bp3-alert-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; }
+  .styled-alert .bp3-alert-contents {
+    width: 100%; }
+  .styled-alert .bp3-alert-footer {
+    margin-top: 20px; }
+    .styled-alert .bp3-alert-footer .bp3-button {
+      outline: none; }
+    .styled-alert .bp3-alert-footer .bp3-button:first-child:not(:last-child) {
+      background-image: none !important;
+      box-shadow: none !important;
+      color: #ffffff;
+      width: 96px;
+      font-family: "Open Sans", sans-serif;
+      background-image: none;
+      height: 32px;
+      border-radius: 4px;
+      background-color: #22c488 !important; }
+    .styled-alert .bp3-alert-footer .bp3-button:first-child:not(:last-child):hover {
+      background-color: #20b67e !important; }
+    .styled-alert .bp3-alert-footer .bp3-button:first-child:not(:last-child):active {
+      background-color: #189365 !important; }
+    .styled-alert .bp3-alert-footer .bp3-button:last-child {
+      background-color: white !important;
+      background-image: none !important;
+      box-shadow: none !important;
+      color: #394d61;
+      width: 96px;
+      height: 32px;
+      border: 1px solid rgba(0, 0, 0, 0.25) !important;
+      border-radius: 4px;
+      font-family: "Open Sans", sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase; }
+    .styled-alert .bp3-alert-footer .bp3-button:last-child:hover {
+      border-color: #22c488 !important; }
+      .styled-alert .bp3-alert-footer .bp3-button:last-child:hover .bp3-button-text {
+        color: #22c488; }
+    .styled-alert .bp3-alert-footer .bp3-button:last-child:active {
+      border-color: #22c488 !important;
+      background-color: #defff3 !important; }
+      .styled-alert .bp3-alert-footer .bp3-button:last-child:active .bp3-button-text {
+        color: #22c488; }
+
+/*# sourceMappingURL=styles.css.map */

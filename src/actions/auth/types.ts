@@ -1,16 +1,20 @@
-export const GET_DATA = "get-data";
-export const LOGOUT_USER = "logout-user";
-export const LOGIN_USER = "login-user";
-export const LOGIN_USER_SUCCESS = "login-user-success";
-export const LOGIN_PASSWORD_ERROR = "login-password-error";
-export const LOGIN_USER_ERROR = "login-user-error";
+export const LOGOUT = "logout";
+export const LOGIN_SUCCESS = "login-admin-success";
+export const LOGIN_ERROR = "login-admin-error";
 export const LOGIN_STATE_ACTION = "login-state-action";
-export const USERNAME_CHANGED = "username_changed";
-export const PASSWORD_CHANGED = "password_changed";
-export const FORGOT_PASSWORD_CHANGED = "forgot_password_changed";
-export const CREATE_ACCOUNT_USERNAME_CHANGED = "create-account_username_changed";
-export const CREATE_ACCOUNT_PASSWORD_CHANGED = "create-account_password_changed";
 
-export const VALIDATE_USERNAME = "validate-username";
-export const VALIDATE_PASSWORD = "validate-password";
+export const ADMIN_NAME_CHANGED = "admin-name-changed";
+export const ADMIN_PASSWORD_CHANGED = "ADMIN_PASSWORD_CHANGED";
+export const ADMIN_FORGOT_PASSWORD_CHANGED = "admin-forgot-password-changed";
 
+export const CREATE_ACCOUNT_SUCCESS = "create-account-success";
+export const CREATE_ACCOUNT_ERROR = "create-account-error";
+export const CREATE_ACCOUNT_ADMIN_NAME_CHANGED = "create-account_admin-name-changed";
+export const CREATE_ACCOUNT_ADMIN_PASSWORD_CHANGED = "create-account_admin-ADMIN_PASSWORD_CHANGED";
+
+export const USER_NAME_CHANGED = 'login-user-name-changed';
+export const USER_EMAIL_CHANGED = 'login-user-email-changed';
+export const USER_PHONE_NUMBER_CHANGED = 'login-user-phone-number-changed';
+
+export const VALIDATE_SIGN_IN = "validate-sign-in";
+export const VALIDATE_CREATE_ACCOUNT = "validate-create-account";

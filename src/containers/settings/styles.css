@@ -6,10 +6,75 @@
   flex-direction: column; }
   .notifly-settings .tool-bar {
     background: #22c488 !important; }
-    .notifly-settings .tool-bar .mpd-icon {
+    .notifly-settings .tool-bar .library-icon {
       height: 35px; }
-  .notifly-settings .mpd-button {
+  .notifly-settings .library-button {
     padding: 0 !important; }
+
+.notifly-settings-users-item {
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  height: 60px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0; }
+  .notifly-settings-users-item .library-floating-input-label {
+    top: 4px; }
+
+.notifly-settings-spinner {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.6); }
+
+.notifly-settings-users-item-basic {
+  display: flex;
+  align-items: center;
+  min-width: 300px;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  justify-content: space-between; }
+
+.notifly-settings-user-item-user-comments {
+  min-width: 300px; }
+
+.notifly-settings-user-item-user-comments {
+  height: 100%;
+  justify-content: center; }
+  .notifly-settings-user-item-user-comments .library-floating-input-label {
+    top: 20px; }
+  .notifly-settings-user-item-user-comments input:focus ~ .library-floating-input-label,
+  .notifly-settings-user-item-user-comments input:not(:focus):valid ~ .library-floating-input-label {
+    top: 5px !important; }
+  .notifly-settings-user-item-user-comments .library-floating-input.active {
+    top: 5px !important; }
+
+.notifly-settings-user-item-user-name {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600; }
+
+.notifly-settings-user-item-user-email, .notifly-settings-user-item-user-phone {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 20px; }
+
+.notifly-settings-user-item-user-comments {
+  margin-top: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 20px;
+  flex: 4; }
+
+.notifly-settings-sign-out-wrapper {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center; }
 
 .notifly-settings-save.disabled {
   display: none; }
@@ -34,23 +99,23 @@
   font-family: "Open Sans", sans-serif;
   border-color: rgba(0, 0, 0, 0.15);
   margin-bottom: 5px;
-  color: #22c488; }
+  color: rgba(0, 0, 0, 0.75); }
 
 .notifly-settings-actions-select {
   margin-left: 10px; }
-  .notifly-settings-actions-select .mpd-select-options {
+  .notifly-settings-actions-select .library-select-options {
     height: 100px; }
-  .notifly-settings-actions-select .mpd-select-arrow-icon {
+  .notifly-settings-actions-select .library-select-arrow-icon {
     right: 10px; }
-  .notifly-settings-actions-select .mpd-select-label {
-    font-weight: 600;
-    color: #22c488; }
+  .notifly-settings-actions-select .library-select-label {
+    font-weight: 600; }
 
 .notifly-settings-scroll-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden; }
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll; }
 
 .notifly-settings-inner-container {
   padding: 20px 40px;
@@ -78,8 +143,7 @@
 .notifly-settings-row {
   display: flex;
   align-items: center;
-  padding: 20px 0;
-  max-width: 500px; }
+  padding: 20px 0; }
   .notifly-settings-row.schedule {
     overflow: hidden;
     padding-bottom: 0; }
@@ -94,7 +158,7 @@
   font-size: 13px;
   font-weight: 600;
   font-family: "Open Sans", sans-serif;
-  color: #22c488;
+  color: rgba(0, 0, 0, 0.75);
   outline: none !important;
   border-width: 0 0 1px 0; }
   .notifly-settings-schedule-item-title.error {
@@ -108,6 +172,26 @@
 .notifly-settings-schedules {
   display: flex; }
 
+.notifly-settings-hidden-link {
+  opacity: 0;
+  position: absolute;
+  position: absolute;
+  left: 133px;
+  width: 77px;
+  cursor: pointer;
+  z-index: 1; }
+
+.notifly-settings-shown-link {
+  border: none;
+  width: 77px;
+  font-size: 12px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  margin-left: 10px;
+  color: #106ba3;
+  text-decoration: underline;
+  outline: none !important; }
+
 .notifly-settings-schedule-error {
   color: #ff5252;
   margin-left: 10px;
@@ -117,10 +201,13 @@
     transform: translateX(0%); }
 
 .notifly-settings-time-restriction {
-  width: 95px;
+  width: 105px;
   margin: 0 10px; }
-  .notifly-settings-time-restriction .mpd-select-arrow-icon {
+  .notifly-settings-time-restriction .library-select-arrow-icon {
     right: 10px; }
+
+.notifly-settings-update-language {
+  margin-left: 10px; }
 
 @media (max-width: 480px) {
   .notifly-settings-title {
@@ -131,13 +218,15 @@
     justify-content: space-between; }
 
   .notifly-settings-schedule-item {
-    margin-left: 0;
-    justify-content: center; }
-
-  .notifly-settings-row {
-    justify-content: center; }
+    margin-left: 10px; }
 
   .notifly-settings-label {
-    text-align: center; } }
+    text-align: center; }
+
+  .notifly-settings-users-item-basic {
+    min-width: 150px; }
+
+  .notifly-settings-user-item-user-comments {
+    min-width: 150px; } }
 
 /*# sourceMappingURL=styles.css.map */

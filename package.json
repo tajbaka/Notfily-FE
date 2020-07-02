@@ -1,5 +1,5 @@
 {
-  "name": "mpd-react-portal",
+  "name": "notifly",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -49,14 +49,10 @@
   },
   "scripts": {
     "start": "REACT_APP_STAGE=development react-app-rewired start --scripts-version react-scripts-ts",
-    "start:deploy": "REACT_APP_STAGE=production react-app-rewired start --scripts-version react-scripts-ts",
+    "deploy": "npm run build; firebase deploy --only hosting",
     "build": "REACT_APP_STAGE=production react-app-rewired build --scripts-version react-scripts-ts",
-    "build:dist": "REACT_APP_STAGE=distribution react-app-rewired build  --scripts-version react-scripts-ts",
     "test": "react-app-rewired test --scripts-version react-scripts-ts --env=jsdom",
-    "eject": "react-app-rewired eject --scripts-version react-scripts-ts",
-    "copy-files-to-kit": "npm run remove-components-from-kit && npm run copy-components-to-kit",
-    "remove-components-from-kit": "rm -rf ../MPDReactKit/src/components",
-    "copy-components-to-kit": "cp -a ./src/components/. ../MPDReactKit/src/components"
+    "eject": "react-app-rewired eject --scripts-version react-scripts-ts"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.3",

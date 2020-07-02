@@ -2,106 +2,38 @@
 
   .primary-color {
     cursor: pointer;
-    .mpd-select-label {
-      font-family: $font-family;
+    .library-select-label {
+      // color: #22c488;
       font-size: 12px;
-      font-weight: 600;
-      color: #394d61;
-    }
-    .mpd-select-option {
-      color: #394d61;
       font-family: $font-family;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 10px;
-    }
-    .mpd-select-option:hover {
-      background-color: #22c488;;
-      color: #fff;
+      font-weight: 600;
     }
   }
-  .no-line-blue {
-    .mpd-select-label {
-      font-family: $font-family;
-      color: rgba(0,0,0,.75);
-      font-size: 16px;
-      font-weight: 600;
+
+  .primary-color:hover {
+    .library-select {
+      border-color: #22c488;
     }
-    .mpd-select-option {
-      color: black;
-      font-family: $font-family;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px;
+    .library-select-label {
+      color: #22c488;
     }
-    .mpd-select-option:hover {
-      background-color: #1f76ff;
-      color: #fff;
-    }
-    .mpd-select {
-      border: none;
-    }
-    .mpd-select-arrow-icon {
-      right: 5px;
+    .library-select-arrow-icon {
+        polygon {
+          fill: #22c488 !important; 
+        }
     }
   }
-  .line-blue {
-    .line-blue-label {
-      text-transform: uppercase;
-      color: #1f76ff;
-      font-family: $font-family;
-      font-size: 12px;
-      font-weight: 600;
+  .primary-color:active {
+    .library-select {
+      border-color: #22c488;
+      background-color: #e5faf3;
     }
-    .mpd-select-label {
-      font-family: $font-family;
-      color: rgba(0,0,0,.75);
-      font-size: 16px;
-      font-weight: 600;
+    .library-select-label {
+      color: #22c488;
     }
-    .mpd-select-option {
-      color: black;
-      font-family: $font-family;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px;
-    }
-    .mpd-select-option:hover {
-      background-color: #1f76ff;
-      color: #fff;
-    }
-    .mpd-select {
-      border-color: #1f76ff;
-      border-width: 0px 0px 1px 0px;
-      border-radius: 0;
-      padding-left: 0;
-    }
-    .mpd-select-arrow-icon {
-      right: 5px;
-    }
-  }
-  .image-blue {
-    .mpd-select-options {
-      width: 120px;
-    }
-    .mpd-select-option {
-      color: black;
-      font-family: $font-family;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px;
-    }
-    .mpd-select-option:hover {
-      background-color: #1f76ff;
-      color: #fff;
-    }
-    .mpd-select {
-      background: white;
-      padding: 0px 0px 0px 7px;
-      height: 30px;
-      width: 55px;
-    }
-    .mpd-select-arrow-icon {
-      right: 7px;
+    .library-select-arrow-icon {
+        polygon {
+          fill: #22c488 !important; 
+        }
     }
   }

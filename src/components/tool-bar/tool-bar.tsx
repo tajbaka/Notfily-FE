@@ -1,17 +1,9 @@
 import * as classNames from "classnames";
 import * as React from "react";
 
-import {
-  Alignment,
-  HTMLDivProps,
-  Navbar,
-  NavbarGroup
-} from "@blueprintjs/core";
-
-import { Classes } from "src/mpd-library";
+import { HTMLDivProps } from "@blueprintjs/core";
 
 import "./styles.css";
-
 
 export interface IToolBarProps extends HTMLDivProps {
   leftElement?: JSX.Element;
@@ -29,17 +21,17 @@ export class ToolBar extends React.PureComponent<IToolBarProps, {}> {
     }
 
     return (
-      <Navbar className={classes}>
+      <div className={classes}>
         {leftElement && (
-          <NavbarGroup align={Alignment.LEFT}>{leftElement}</NavbarGroup>
+          <div className={classes + '-left-panel'}>{leftElement}</div>
         )}
         {centerElement && (
-          <NavbarGroup align={Alignment.CENTER} className={Classes.ALIGN_CENTER}>{centerElement}</NavbarGroup>
+          <div className={classes + '-center-panel'}>{centerElement}</div>
         )}
         {rightElement && (
-          <NavbarGroup align={Alignment.RIGHT}>{rightElement}</NavbarGroup>
+          <div className={classes + '-right-panel'}>{rightElement}</div>
         )}
-      </Navbar>
+      </div>
     );
   }
 }

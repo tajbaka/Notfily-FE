@@ -6,49 +6,11 @@
   background: none !important;
   box-shadow: none !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  &.mpd-loading {
-    pointer-events: none;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
   .bpd-navbar {
     white-space: nowrap;
   }
-  .mpd-align-center {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    z-index: -1;
-  }
-}
-
-@media (max-width: 480px) {
-//     .top-bar {
-//       &.detail {
-//         .bp3-navbar {
-//           width: 100%;
-//           background-color: white;
-//           position: fixed;
-//           z-index: 1000;
-//         }
-//         .closebutton {
-//           display: initial;
-//         }
-//         .togglebutton {
-//           display: none;
-//         }
-//       }
-  
-//       &.compose {
-//         .bp3-navbar {
-//           width: 100%;
-//           background-color: white;
-//           position: fixed;
-//           z-index: 1000;
-//         }
-//       }
-//     }
-//   }
 }

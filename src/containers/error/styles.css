@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.notifly-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; }
+
+.notifly-error-title {
+  color: #ff5252;
+  font-size: 25px;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif; }
+
+/*# sourceMappingURL=styles.css.map */

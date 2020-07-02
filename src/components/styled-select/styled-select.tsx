@@ -1,13 +1,13 @@
 import * as classNames from "classnames";
 import * as React from "react";
 
-import { IMPDSelectProps, MPDSelect } from "src/mpd-library";
+import { ILibrarySelectProps, LibrarySelect } from "src/library";
 
 import { Text } from "@blueprintjs/core";
 
 import "./styles.css";
 
-export interface IStyledSelectProps extends IMPDSelectProps{
+export interface IStyledSelectProps extends ILibrarySelectProps{
   type?: string;
   label?: string;
 }
@@ -21,7 +21,7 @@ export const StyledSelect: React.SFC<IStyledSelectProps> = props => {
       {label && 
         <Text className={classes + '-label'}> { label } </Text>
       }
-      <MPDSelect  {...newProps} />
+      <LibrarySelect  {...newProps} />
     </div>
   );
 };

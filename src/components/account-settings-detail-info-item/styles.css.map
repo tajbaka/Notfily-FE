@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AACQ,6GAAqG;ACC7G,2BAA4B;EACxB,OAAO,EAAE,IAAI;EACb,OAAO,EAAE,MAAM;EACf,WAAW,EAAE,IAAI;;AAGrB,gCAAiC;EAC7B,KAAK,EAAE,mBAAmB;EAC1B,WAAW,EDLD,uBAAuB;ECMjC,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,GAAG;EAChB,WAAW,EAAE,IAAI;EACjB,SAAS,EAAE,KAAK",
-"sources": ["../../../../notifly/src/components/common/variables.scss","styles.scss"],
-"names": [],
-"file": "styles.css"
-}
