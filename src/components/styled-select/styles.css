@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.primary-color {
+  cursor: pointer; }
+  .primary-color .library-select-label {
+    font-size: 12px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600; }
+
+.primary-color:hover .library-select {
+  border-color: #22c488; }
+.primary-color:hover .library-select-label {
+  color: #22c488; }
+.primary-color:hover .library-select-arrow-icon polygon {
+  fill: #22c488 !important; }
+
+.primary-color:active .library-select {
+  border-color: #22c488;
+  background-color: #e5faf3; }
+.primary-color:active .library-select-label {
+  color: #22c488; }
+.primary-color:active .library-select-arrow-icon polygon {
+  fill: #22c488 !important; }
+
+/*# sourceMappingURL=styles.css.map */

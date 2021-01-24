@@ -1,0 +1,39 @@
+@import "../common/variables.scss";
+
+  .primary-color {
+    cursor: pointer;
+    .library-select-label {
+      // color: #22c488;
+      font-size: 12px;
+      font-family: $font-family;
+      font-weight: 600;
+    }
+  }
+
+  .primary-color:hover {
+    .library-select {
+      border-color: #22c488;
+    }
+    .library-select-label {
+      color: #22c488;
+    }
+    .library-select-arrow-icon {
+        polygon {
+          fill: #22c488 !important; 
+        }
+    }
+  }
+  .primary-color:active {
+    .library-select {
+      border-color: #22c488;
+      background-color: #e5faf3;
+    }
+    .library-select-label {
+      color: #22c488;
+    }
+    .library-select-arrow-icon {
+        polygon {
+          fill: #22c488 !important; 
+        }
+    }
+  }

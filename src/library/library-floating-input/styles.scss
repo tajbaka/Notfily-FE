@@ -1,0 +1,66 @@
+@import "../common/variables.scss";
+
+.library-floating-input {
+    position: relative;
+    outline: none !important;
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0px 0px 0px;
+    input:focus ~ .library-floating-input-label,
+    input:not(:focus):valid ~ .library-floating-input-label {
+        transition: 0.3s top ease;
+        top: -15px !important;
+        color: #22c488;
+    }
+    &.active {
+        input {
+            border-color: #22c488;
+        }
+        .library-floating-input-label {
+            transition: 0.3s top ease;
+            top: -15px;
+            color: #22c488;
+        }
+    }
+    input:focus {
+        border-color: #22c488;
+    }
+    input {
+        outline: none !important;
+        border-width: 0 0 1px 0;
+        font-size: 16px;
+        font-family: $font-family;
+    }
+}
+
+.library-floating-input-label {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    font-size: 12px;
+    font-family: $font-family;
+    transform: translateZ(0);
+    font-weight: 600;
+    z-index: 1;
+    pointer-events: none;
+    outline: none !important;
+    transition: 0.3s top ease;
+}
+
+.library-floating-input-fixed-placeholder {
+  position: absolute;
+  top: 6px;
+  color: rgba(0, 0, 0, 0.25);
+  font-family: $font-family;
+  font-size: 16px;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none;
+}
+
+.library-floating-input-invisible {
+  visibility: hidden;
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}

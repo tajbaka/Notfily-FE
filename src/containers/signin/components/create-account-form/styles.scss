@@ -1,0 +1,95 @@
+@import "../../../common/variables";
+
+.create-account-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 450px;
+    border-radius: 8px;
+    border: solid 1px rgba(0,0,0,0.10);
+    padding: 30px;
+}
+
+.create-account-form-title {
+    font-size: 18px;
+    user-select: none;
+}
+
+.create-account-form-form {
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-account-form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-account-form-logo {
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.create-account-form-styled-input:first-child {
+   margin-bottom: 15px;
+}
+
+.create-account-form-styled-input:last-child {
+    margin-bottom: 10px;
+}
+
+.create-account-form-error {
+    color: $error;
+    font-size: 16px;
+    align-self: flex-end;
+    user-select: none;
+    padding: 10px 0;
+    .bp3-button-text {
+        font-size: 12px;
+        color: #22c488;
+    }
+}
+
+.create-account-form-forgot-password {
+    align-self: flex-start;
+    .bp3-button-text {
+        color: #22c488;
+        font-size: 14px;
+    }
+}
+
+.create-account-form-action-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+.library-input-container-input, .create-account-form-styled-input {
+    width: 100%;
+}
+
+.create-account-form-create-account {
+    .bp3-button-text {
+        color: #22c488;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .create-account-form {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 100%;
+        border: none;
+        max-height: 95%;
+        justify-content: space-between;
+    }
+}

@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,100,200,300,400,500,600,700,800:");
+.library-input-container {
+  position: relative;
+  outline: none; }
+  .library-input-container input {
+    background: #feffe4;
+    box-shadow: none;
+    outline: none;
+    border-radius: 3px;
+    height: 35px;
+    padding: 0 8px;
+    border: 1px solid rgba(0, 0, 0, 0.15); }
+  .library-input-container input:focus {
+    border-color: #22c488; }
+
+.library-input-counter {
+  text-align: right;
+  color: rgba(0, 0, 0, 0.75);
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400; }
+
+.library-input-fixed-placeholder {
+  position: absolute;
+  top: 6px;
+  color: rgba(0, 0, 0, 0.25);
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  pointer-events: none;
+  user-select: none; }
+
+.library-input-invisible {
+  visibility: hidden;
+  position: absolute;
+  pointer-events: none;
+  user-select: none; }
+
+.library-input-label {
+  position: absolute;
+  top: -7px;
+  left: 8px;
+  background: white;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0 5px;
+  height: 12px; }
+
+/*# sourceMappingURL=styles.css.map */

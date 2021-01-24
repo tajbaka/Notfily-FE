@@ -1,0 +1,18 @@
+#app-container {
+  display: flex;
+  overflow: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; }
+
+body {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+html, body {
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; }
+
+@supports not (-webkit-overflow-scrolling: touch) {
+  #app-container {
+    height: 100vh; } }
+
+/*# sourceMappingURL=style.css.map */

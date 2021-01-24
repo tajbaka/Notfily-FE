@@ -1,0 +1,103 @@
+@import "../../../common/variables";
+
+.signin-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 450px;
+    border-radius: 8px;
+    border: solid 1px rgba(0,0,0,0.10);
+    padding: 30px;
+    .library-input-label {
+        font-family: $font-family;
+    }
+}
+
+.signin-form-title {
+    font-size: 18px;
+    user-select: none;
+    font-weight: 600;
+    font-family: $font-family;
+    text-transform: uppercase;
+}
+
+.signin-form-form {
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.signin-form-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.signin-form-logo {
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.signin-form-styled-input:first-child {
+   margin-bottom: 15px;
+}
+
+.signin-form-styled-input:last-child {
+    margin-bottom: 10px;
+}
+
+.signin-form-error {
+    color: $error;
+    font-size: 16px;
+    align-self: flex-end;
+    user-select: none;
+    min-height: 20px;
+    margin-top: 10px;
+    text-align: center;
+    .bp3-button-text {
+        font-size: 12px;
+        color: #22c488;
+    }
+}
+
+.signin-form-forgot-password {
+    align-self: flex-start;
+    .bp3-button-text {
+        color: #22c488;
+        font-size: 14px;
+    }
+}
+
+.signin-form-action-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.library-input-container-input, .signin-form-styled-input {
+    width: 100%;
+}
+
+.signin-form-create-account {
+    .bp3-button-text {
+        color: #22c488;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .signin-form {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        max-width: 100%;
+        border: none;
+        max-height: 95%;
+        justify-content: space-between;
+    }
+}
