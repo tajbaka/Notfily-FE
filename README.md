@@ -8,4 +8,4 @@ Admins can block dates/times where they are unavailable and allow send their lin
 With seemless user-onboarding, individuals are not registering an account how they traditionally would.
 
 ### Tech Involved: 
-ReactJS written in typescript, firebase functions, firebase hosting, firebase real-time database.
+ReactJS written in typescript, redux state management, redux-thunk middleware.
