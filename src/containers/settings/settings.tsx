@@ -182,7 +182,7 @@ export class Settings extends React.Component<ISettingsProps, ISettingsState> {
       <div className={classes + '-inner-container'}>
         <div className={classes + '-row'}>
           <Text className={classes + '-label'}> {language[settings.language].linkToShare}: </Text>
-          <input className={classes + '-hidden-link'} value={'https://notiflyapp.co/user/' + adminUid} ref={this.copyRef} onClick={this.copyText} />
+          <input className={classes + '-hidden-link'} value={'https://notifly-897c7.web.app/user/' + adminUid} ref={this.copyRef} onClick={this.copyText} />
           <input className={classes + '-shown-link'} value={language[settings.language].clickToCopy}/>
         </div>
         <div className={classes + '-row'}>
