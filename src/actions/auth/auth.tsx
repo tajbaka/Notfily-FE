@@ -118,7 +118,8 @@ export const onCreateAdmin: ActionCreator<any> = (email, password, authString, n
       firebase.auth().createUserWithEmailAndPassword(email, password).then((response: any) => {
       const uid = response.user.uid;
       dispatch({ type: START_LOADING });
-      axios.default.get(`https://us-central1-notifly-dbce7.cloudfunctions.net/createAdminAccount?uid=${uid}`)
+        
+      axios.default.get(`https://us-central1-notifly-897c7.cloudfunctions.net/createAdminAccount?uid=${uid}`)
       .then(reponse => {
         createAccountSuccess(dispatch, response, authString);
         }).catch((error: any) => {
@@ -154,7 +155,7 @@ export const onCreateUser: ActionCreator<any> = (schedules: any, adminUid: strin
       dispatch({ type: START_LOADING });
       firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).then((response: any) => {
       const userUid = response.user.uid;
-      axios.default.post(`https://us-central1-notifly-dbce7.cloudfunctions.net/createUserAccount?uid=${userUid}`, {
+      axios.default.post(`https://us-central1-notifly-897c7.cloudfunctions.net/createUserAccount?uid=${userUid}`, {
         adminUid,
         userEmail,
         userName,

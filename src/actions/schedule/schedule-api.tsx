@@ -12,6 +12,7 @@ export const getAdminData = (ref: any) => {
   dispatch({ type: START_LOADING });
   firebase.database().ref(`/users/${adminUid}`).on('value', (snapshot: any) => {
     const adminData = snapshot.val();
+    console.log(adminData, 'here1')
     dispatch({ type: DONE_LOADING });
     if(adminData === null){
       dispatch({ type: GET_SETTINGS_DATA_ERROR, payload: 'Invalid Url' });
@@ -43,7 +44,7 @@ export const getUserData = (ref: any) => {
 export const updateSettings = (ref: any) => {
   const { adminUid, dispatch, settings } = ref;
   dispatch({ type: START_LOADING });
-  axios.default.post(`https://us-central1-notifly-dbce7.cloudfunctions.net/updateAdminSettings?uid=${adminUid}`, {
+  axios.default.post(`https://us-central1-notifly-897c7.cloudfunctions.net/updateAdminSettings?uid=${adminUid}`, {
     settings
   });
 };
@@ -51,7 +52,7 @@ export const updateSettings = (ref: any) => {
 export const updateSchedule = (ref: any) => {
     const { dispatch, schedules, adminUid } = ref;
     dispatch({ type: START_LOADING });
-    axios.default.post(`https://us-central1-notifly-dbce7.cloudfunctions.net/updateAdminSchedule?uid=${adminUid}`, {
+    axios.default.post(`https://us-central1-notifly-897c7.cloudfunctions.net/updateAdminSchedule?uid=${adminUid}`, {
       schedules
     });
 };
@@ -59,7 +60,7 @@ export const updateSchedule = (ref: any) => {
 export const updateUser = (ref: any) => {
   const { dispatch, user, adminUid, userUid } = ref;
   dispatch({ type: START_LOADING });
-  axios.default.post(`https://us-central1-notifly-dbce7.cloudfunctions.net/updateUser?uid=${userUid}`, {
+  axios.default.post(`https://us-central1-notifly-897c7.cloudfunctions.net/updateUser?uid=${userUid}`, {
     adminUid,
     user
   });

@@ -9,6 +9,8 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import * as React from "react";
 
+import { firebaseConfig } from '../config'
+
 import { isAuthenticated, PrivateRoute } from "./private-route/private-route";
 
 import { LoginState } from "../components";
@@ -32,16 +34,7 @@ interface IAppState {
   maxHeight?: number;
 }
 
-const config = {
-  apiKey: "AIzaSyAWwMXVEZxjKjmoZldzwhdQCuA5RkNUpz0",
-  authDomain: "notifly-dbce7.firebaseapp.com",
-  databaseURL: "https://notifly-dbce7.firebaseio.com",
-  projectId: "notifly-dbce7",
-  storageBucket: "notifly-dbce7.appspot.com",
-  messagingSenderId: "319741107274"
-};
-
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 
 class App extends React.Component<IAppProps, IAppState> {
   public constructor(props: IAppProps) {

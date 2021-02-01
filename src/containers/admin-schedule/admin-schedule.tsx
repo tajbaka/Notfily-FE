@@ -85,6 +85,7 @@ export class AdminSchedule extends React.Component<IAdminScheduleProps, IAdminSc
         timeSlots,
         view: isMobile ? 'day' : 'week'
     }
+
   }
 
   public componentWillReceiveProps(nextProps: any) {
